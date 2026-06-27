@@ -1,0 +1,224 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1640" height="1180" viewBox="0 0 1640 1180" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="11" markerHeight="11" refX="7" refY="3.2" orient="auto"><path d="M0,0 L7,3.2 L0,6.4 Z" fill="#94a3b8"/></marker>
+    <marker id="arrd" markerWidth="11" markerHeight="11" refX="7" refY="3.2" orient="auto"><path d="M0,0 L7,3.2 L0,6.4 Z" fill="#0891b2"/></marker>
+    <style>
+      .lane{font-size:14px;font-weight:800;letter-spacing:2px;}
+      .band{font-size:15px;font-weight:800;}
+      .ct{font-size:13.5px;font-weight:700;}
+      .cd{font-size:10.5px;fill:#475569;}
+      .ev{font-size:9.5px;fill:#94a3b8;font-style:italic;}
+      .pl{font-size:10px;fill:#64748b;font-weight:600;}
+    </style>
+  </defs>
+  <rect width="1640" height="1180" fill="#f8fafc"/>
+
+  <text x="60" y="46" font-size="26" font-weight="800" fill="#0f172a">Spring AI Alibaba Admin — System Architecture</text>
+  <text x="60" y="70" font-size="13" fill="#64748b">Agent Studio · AI Agent 全生命周期平台（基于源码核对：pom / docker-compose / *.sql / Controller）</text>
+
+  <!-- ===================== FRONTEND ===================== -->
+  <text class="lane" fill="#1d4ed8" transform="rotate(-90 28 250)" x="28" y="250" text-anchor="middle">FRONTEND</text>
+  <rect x="60" y="92" width="1180" height="150" rx="11" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.6"/>
+  <text class="band" fill="#1d4ed8" x="80" y="118">前端 · React 18 + Ant Design 5 · umi 4 · 多包 monorepo</text>
+  <g>
+    <rect x="80" y="130" width="270" height="100" rx="8" fill="#fff" stroke="#93c5fd" stroke-width="1.4"/>
+    <text class="ct" fill="#1e40af" x="96" y="154">Prompt / Agent Studio（main）</text>
+    <text class="cd" x="96" y="174">Prompt 模板/版本/调试、低代码搭建、</text>
+    <text class="cd" x="96" y="190">知识库、模型与 MCP 管理。</text>
+    <text class="ev" x="96" y="216">packages/main · react-router 6 · axios</text>
+  </g>
+  <g>
+    <rect x="365" y="130" width="270" height="100" rx="8" fill="#fff" stroke="#93c5fd" stroke-width="1.4"/>
+    <text class="ct" fill="#1e40af" x="381" y="154">Spark-Flow 画布</text>
+    <text class="cd" x="381" y="174">工作流可视化编排、节点拖拽连线，</text>
+    <text class="cd" x="381" y="190">实验运行与结果对比视图。</text>
+    <text class="ev" x="381" y="216">packages/spark-flow · @dnd-kit</text>
+  </g>
+  <g>
+    <rect x="650" y="130" width="270" height="100" rx="8" fill="#fff" stroke="#93c5fd" stroke-width="1.4"/>
+    <text class="ct" fill="#1e40af" x="666" y="154">评测 / 可观测 UI</text>
+    <text class="cd" x="666" y="174">数据集、评估器、实验大盘，</text>
+    <text class="cd" x="666" y="190">Trace / Span 链路查看。</text>
+    <text class="ev" x="666" y="216">Observability · 服务总览</text>
+  </g>
+  <g>
+    <rect x="935" y="130" width="285" height="100" rx="8" fill="#fff" stroke="#93c5fd" stroke-width="1.4"/>
+    <text class="ct" fill="#1e40af" x="951" y="154">spark-i18n</text>
+    <text class="cd" x="951" y="174">多语言资源包，被 main 与</text>
+    <text class="cd" x="951" y="190">spark-flow 共享复用。</text>
+    <text class="ev" x="951" y="216">packages/spark-i18n</text>
+  </g>
+
+  <!-- arrow FE->BE -->
+  <line x1="650" y1="242" x2="650" y2="288" stroke="#94a3b8" stroke-width="1.8" marker-end="url(#arr)"/>
+  <text class="pl" x="660" y="270">HTTP / SSE</text>
+
+  <!-- ===================== BACKEND ===================== -->
+  <text class="lane" fill="#15803d" transform="rotate(-90 28 540)" x="28" y="540" text-anchor="middle">BACKEND</text>
+  <rect x="60" y="290" width="1180" height="430" rx="11" fill="#f0fdf4" stroke="#22c55e" stroke-width="1.6"/>
+  <text class="band" fill="#15803d" x="80" y="316">后端 · Java 17 · Spring Boot 3.5 · 端口 8080 · 四层 Maven 模块</text>
+
+  <!-- row1: openapi + start -->
+  <g>
+    <rect x="80" y="330" width="555" height="104" rx="8" fill="#fff" stroke="#86efac" stroke-width="1.4"/>
+    <text class="ct" fill="#166534" x="96" y="354">server-openapi　·　REST 接入层</text>
+    <text class="cd" x="96" y="376">30+ Controller：Prompt · Dataset · Evaluator · Experiment · ModelConfig ·</text>
+    <text class="cd" x="96" y="392">Observability ｜ App · Workflow · KnowledgeBase · McpServer · Tool · Auth/OAuth2</text>
+    <text class="ev" x="96" y="418">鉴权拦截器 · 请求/响应 DTO · spring-boot-starter-web</text>
+  </g>
+  <g>
+    <rect x="650" y="330" width="570" height="104" rx="8" fill="#fff" stroke="#86efac" stroke-width="1.4"/>
+    <text class="ct" fill="#166534" x="666" y="354">server-start　·　启动与装配</text>
+    <text class="cd" x="666" y="376">Spring Boot 入口 · OTel 自动配置 · Nacos 配置 ·</text>
+    <text class="cd" x="666" y="392">模型动态切换（OpenAI / DashScope / DeepSeek / Ollama）。</text>
+    <text class="ev" x="666" y="418">model-config.yaml · micrometer-registry-otlp</text>
+  </g>
+  <line x1="357" y1="434" x2="357" y2="468" stroke="#94a3b8" stroke-width="1.6" marker-end="url(#arr)"/>
+  <line x1="935" y1="434" x2="935" y2="468" stroke="#94a3b8" stroke-width="1.6" marker-end="url(#arr)"/>
+
+  <!-- row2: core -->
+  <g>
+    <rect x="80" y="470" width="1140" height="118" rx="8" fill="#fff" stroke="#86efac" stroke-width="1.4"/>
+    <text class="ct" fill="#166534" x="96" y="494">server-core　·　业务核心</text>
+    <text class="cd" x="96" y="516">Service 层：PromptService · DatasetService · EvaluatorService · ExperimentService · TracingService ·</text>
+    <text class="cd" x="96" y="532">KnowledgeBase / Document / Tool / McpServer / Workflow / Account。RAG 管道（PDF·Tika·Markdown → ES 向量库）。</text>
+    <text class="ev" x="96" y="558">MyBatis-Plus · Druid 连接池 · jgrapht · GraalVM(JS/Python) · Redisson · RocketMQ producer · Argon2 + JWT 鉴权</text>
+  </g>
+  <line x1="650" y1="588" x2="650" y2="622" stroke="#94a3b8" stroke-width="1.6" marker-end="url(#arr)"/>
+
+  <!-- row3: runtime -->
+  <g>
+    <rect x="80" y="624" width="1140" height="80" rx="8" fill="#fcfffc" stroke="#bbf7d0" stroke-width="1.4"/>
+    <text class="ct" fill="#166534" x="96" y="648">server-runtime　·　领域模型层</text>
+    <text class="cd" x="96" y="670">领域模型 · 共享 DTO · 运行时基类（不依赖 Spring，可被 core 与外部 agent 复用）。</text>
+  </g>
+
+  <!-- arrow BE->MW -->
+  <line x1="650" y1="720" x2="650" y2="766" stroke="#94a3b8" stroke-width="1.8" marker-end="url(#arr)"/>
+  <text class="pl" x="660" y="748">JDBC / client SDK</text>
+
+  <!-- ===================== MIDDLEWARE ===================== -->
+  <text class="lane" fill="#c2410c" transform="rotate(-90 28 880)" x="28" y="880" text-anchor="middle">MIDDLEWARE</text>
+  <rect x="60" y="768" width="1180" height="178" rx="11" fill="#fff7ed" stroke="#f97316" stroke-width="1.6"/>
+  <text class="band" fill="#c2410c" x="80" y="794">中间件 · Docker Compose 全容器化</text>
+  <g>
+    <rect x="80" y="806" width="220" height="126" rx="8" fill="#fff" stroke="#fdba74" stroke-width="1.4"/>
+    <text class="ct" fill="#9a3412" x="96" y="830">Nacos</text>
+    <text class="cd" x="96" y="852">配置中心 · 服务注册</text>
+    <text class="cd" x="96" y="868">Prompt 下发 / 动态更新</text>
+    <text class="ev" x="96" y="892">:8848 · gRPC :9848</text>
+    <text class="ev" x="96" y="910">外部 agent 接入点</text>
+  </g>
+  <g>
+    <rect x="312" y="806" width="210" height="126" rx="8" fill="#fff" stroke="#fdba74" stroke-width="1.4"/>
+    <text class="ct" fill="#9a3412" x="328" y="830">Redis</text>
+    <text class="cd" x="328" y="852">会话缓存</text>
+    <text class="cd" x="328" y="868">分布式锁（Redisson）</text>
+    <text class="ev" x="328" y="892">redis 7.2 · :6379</text>
+  </g>
+  <g>
+    <rect x="534" y="806" width="220" height="126" rx="8" fill="#fff" stroke="#fdba74" stroke-width="1.4"/>
+    <text class="ct" fill="#9a3412" x="550" y="830">RocketMQ</text>
+    <text class="cd" x="550" y="852">异步任务 / 事件总线</text>
+    <text class="cd" x="550" y="868">实验与评测解耦调度</text>
+    <text class="ev" x="550" y="892">name :9876 · broker :10911</text>
+    <text class="ev" x="550" y="910">proxy :8080</text>
+  </g>
+  <g>
+    <rect x="766" y="806" width="220" height="126" rx="8" fill="#fff" stroke="#fdba74" stroke-width="1.4"/>
+    <text class="ct" fill="#9a3412" x="782" y="830">Elasticsearch</text>
+    <text class="cd" x="782" y="852">向量库（RAG）</text>
+    <text class="cd" x="782" y="868">全文检索 · Trace 索引</text>
+    <text class="ev" x="782" y="892">ES 9.1 · :9200 / :9300</text>
+  </g>
+  <g>
+    <rect x="998" y="806" width="222" height="126" rx="8" fill="#fff" stroke="#fdba74" stroke-width="1.4"/>
+    <text class="ct" fill="#9a3412" x="1014" y="830">LoongCollector</text>
+    <text class="cd" x="1014" y="852">OTel Collector</text>
+    <text class="cd" x="1014" y="868">OTLP 入口 → ES 管道</text>
+    <text class="ev" x="1014" y="892">:4318 · Kibana :5601</text>
+  </g>
+
+  <!-- arrow MW->DB -->
+  <line x1="650" y1="946" x2="650" y2="992" stroke="#94a3b8" stroke-width="1.8" marker-end="url(#arr)"/>
+
+  <!-- ===================== DATABASE ===================== -->
+  <text class="lane" fill="#7e22ce" transform="rotate(-90 28 1085)" x="28" y="1085" text-anchor="middle">DATABASE</text>
+  <rect x="60" y="994" width="1180" height="158" rx="11" fill="#faf5ff" stroke="#a855f7" stroke-width="1.6"/>
+  <text class="band" fill="#7e22ce" x="80" y="1020">数据库 · MySQL 8 (:3306) · MyBatis-Plus ORM + Druid 连接池</text>
+  <g>
+    <rect x="80" y="1032" width="555" height="106" rx="8" fill="#fff" stroke="#d8b4fe" stroke-width="1.4"/>
+    <text class="ct" fill="#6b21a8" x="96" y="1056">admin-schema（评测平台 · 11 张表）</text>
+    <text class="cd" x="96" y="1078">prompt · prompt_version · dataset · dataset_version · dataset_item ·</text>
+    <text class="cd" x="96" y="1094">evaluator · evaluator_version · evaluator_template · experiment ·</text>
+    <text class="cd" x="96" y="1110">experiment_result · model_config</text>
+  </g>
+  <g>
+    <rect x="650" y="1032" width="570" height="106" rx="8" fill="#fff" stroke="#d8b4fe" stroke-width="1.4"/>
+    <text class="ct" fill="#6b21a8" x="666" y="1056">agentscope-schema（搭建平台 · 15 张表）</text>
+    <text class="cd" x="666" y="1078">account · workspace · application · application_version · api_key ·</text>
+    <text class="cd" x="666" y="1094">knowledge_base · document · plugin · tool · mcp_server ·</text>
+    <text class="cd" x="666" y="1110">provider · model · agent_schema · application_component · reference</text>
+  </g>
+
+  <!-- ===================== EXTERNAL (right top) ===================== -->
+  <rect x="1270" y="92" width="330" height="300" rx="11" fill="#ecfeff" stroke="#06b6d4" stroke-width="1.6" stroke-dasharray="6 4"/>
+  <text class="band" fill="#0e7490" x="1290" y="118">外部 EXTERNAL</text>
+  <g>
+    <rect x="1290" y="132" width="290" height="66" rx="8" fill="#fff" stroke="#67e8f9"/>
+    <text class="ct" fill="#0e7490" x="1306" y="156">LLM Providers</text>
+    <text class="cd" x="1306" y="178">OpenAI · DashScope · DeepSeek · Ollama</text>
+  </g>
+  <g>
+    <rect x="1290" y="208" width="290" height="66" rx="8" fill="#fff" stroke="#67e8f9"/>
+    <text class="ct" fill="#0e7490" x="1306" y="232">MCP Tools</text>
+    <text class="cd" x="1306" y="254">Model Context Protocol · 工具调用</text>
+  </g>
+  <g>
+    <rect x="1290" y="284" width="290" height="92" rx="8" fill="#fff" stroke="#67e8f9"/>
+    <text class="ct" fill="#0e7490" x="1306" y="308">External SAA Agents</text>
+    <text class="cd" x="1306" y="330">线上 Agent 应用：经 OTLP 推 trace、</text>
+    <text class="cd" x="1306" y="346">经 Nacos 拉 prompt 并动态更新。</text>
+    <text class="ev" x="1306" y="368">spring-ai-alibaba-agent-nacos</text>
+  </g>
+  <!-- backend <-> providers -->
+  <path d="M1220 382 C 1255 382, 1255 230, 1290 200" fill="none" stroke="#94a3b8" stroke-width="1.6" stroke-dasharray="4 3" marker-end="url(#arr)"/>
+  <text class="pl" x="1228" y="360">Spring AI</text>
+  <!-- external agents -> collector (OTLP) and nacos -->
+  <path d="M1290 340 C 1100 360, 1090 760, 1100 800" fill="none" stroke="#0891b2" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrd)"/>
+  <text class="pl" fill="#0891b2" x="1120" y="600">OTLP → Collector</text>
+  <path d="M1290 360 C 320 420, 200 760, 195 800" fill="none" stroke="#0891b2" stroke-width="1.3" stroke-dasharray="5 4" marker-end="url(#arrd)"/>
+  <text class="pl" fill="#0891b2" x="250" y="640">Nacos pull prompt</text>
+
+  <!-- ===================== INFRA & OPS (right) ===================== -->
+  <rect x="1270" y="410" width="330" height="310" rx="11" fill="#f1f5f9" stroke="#64748b" stroke-width="1.6" stroke-dasharray="6 4"/>
+  <text class="band" fill="#334155" x="1290" y="436">周边基础设施 INFRA &amp; OPS</text>
+  <text class="ev" x="1290" y="454">横切所有分层 · 不展开</text>
+  <g>
+    <rect x="1290" y="466" width="290" height="70" rx="8" fill="#fff" stroke="#cbd5e1"/>
+    <text class="ct" fill="#475569" x="1306" y="490">日志 Logging</text>
+    <text class="cd" x="1306" y="512">Kibana · Logback</text>
+  </g>
+  <g>
+    <rect x="1290" y="546" width="290" height="80" rx="8" fill="#fff" stroke="#cbd5e1"/>
+    <text class="ct" fill="#475569" x="1306" y="570">监控 Monitoring</text>
+    <text class="cd" x="1306" y="592">OpenTelemetry · Micrometer ·</text>
+    <text class="cd" x="1306" y="608">ARMS · OTLP exporter</text>
+  </g>
+  <g>
+    <rect x="1290" y="636" width="290" height="70" rx="8" fill="#fff" stroke="#cbd5e1"/>
+    <text class="ct" fill="#475569" x="1306" y="660">配置 Config</text>
+    <text class="cd" x="1306" y="682">Nacos Config · Spring Config · YAML</text>
+  </g>
+  <line x1="1270" y1="565" x2="1240" y2="540" stroke="#94a3b8" stroke-width="1.4" stroke-dasharray="4 3" marker-end="url(#arr)"/>
+
+  <!-- ===================== DEPLOY (right bottom) ===================== -->
+  <rect x="1270" y="738" width="330" height="120" rx="11" fill="#fefce8" stroke="#ca8a04" stroke-width="1.6"/>
+  <text class="band" fill="#a16207" x="1290" y="764">部署 DEPLOY</text>
+  <text class="cd" x="1290" y="788">Docker Compose（dev / prod）</text>
+  <text class="cd" x="1290" y="808">Kubernetes（deploy/kubernetes）</text>
+  <text class="ev" x="1290" y="832">middleware: mysql · redis · nacos ·</text>
+  <text class="ev" x="1290" y="848">rocketmq · elasticsearch · kibana · loongcollector</text>
+
+  <text x="60" y="1172" font-size="10.5" fill="#94a3b8">实线箭头=调用/依赖（标注协议）；蓝色虚线=外部 Agent 数据流；右侧虚线框为横切设施。所有端口/表名/依赖均取自 docker-compose · *.sql · pom.xml。</text>
+</svg>
