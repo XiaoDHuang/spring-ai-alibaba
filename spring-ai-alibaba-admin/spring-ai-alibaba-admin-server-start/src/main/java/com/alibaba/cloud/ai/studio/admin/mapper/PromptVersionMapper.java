@@ -4,7 +4,10 @@ import com.alibaba.cloud.ai.studio.admin.entity.PromptVersionDO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import org.apache.ibatis.annotations.Select;
+
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface PromptVersionMapper {
@@ -94,4 +97,8 @@ public interface PromptVersionMapper {
      * @return 影响的行数
      */
     int deleteByPromptKey(@Param("promptKey") String promptKey);
+
+    /** Overview: SELECT prompt_key, status, COUNT(*) FROM prompt_version GROUP BY prompt_key, status ORDER BY cnt DESC LIMIT #{limit} */
+    @Select("SELECT prompt_key AS promptKey, status, COUNT(*) AS cnt FROM prompt_version GROUP BY prompt_key, status ORDER BY cnt DESC LIMIT #{limit}")
+    List<Map<String, Object>> selectGroupByPromptKeyAndStatus(@Param("limit") int limit);
 }

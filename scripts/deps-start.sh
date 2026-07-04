@@ -494,7 +494,8 @@ print_summary() {
 
     local ok=0 fail=0 skip=0
     for r in "${RESULTS[@]}"; do
-        local svc="${r%%:*}" rest="${r#*:}" status="${rest%%:*}" info="${rest#*:}"
+        local svc="${r%%:*}" rest="${r#*:}"
+        local status="${rest%%:*}" info="${rest#*:}"
         local name; name=$(svc_name "$svc")
         if [[ "$status" == "OK" ]]; then
             echo -e "  ${GREEN}✅${NC} $name"

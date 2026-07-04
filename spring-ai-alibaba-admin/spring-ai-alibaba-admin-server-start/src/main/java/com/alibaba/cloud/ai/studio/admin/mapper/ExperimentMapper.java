@@ -7,7 +7,10 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import org.apache.ibatis.annotations.Select;
+
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 @Repository
@@ -129,5 +132,9 @@ public interface ExperimentMapper {
      * @return 实验数量
      */
     int selectCountByEvaluatorVersionId(@Param("evaluatorVersionId") Long evaluatorVersionId);
+
+    /** Overview: SELECT status, COUNT(*) FROM experiment GROUP BY status */
+    @Select("SELECT status, COUNT(*) AS cnt FROM experiment GROUP BY status")
+    List<Map<String, Object>> selectStatusCounts();
 
 }

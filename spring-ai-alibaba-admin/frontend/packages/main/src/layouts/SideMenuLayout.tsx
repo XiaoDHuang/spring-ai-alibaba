@@ -17,6 +17,7 @@ import {
   DatabaseOutlined,
   ToolOutlined,
   SwapOutlined,
+  DashboardOutlined,
 } from '@ant-design/icons';
 import $i18n from '@/i18n';
 import Header from './Header';
@@ -34,6 +35,11 @@ const { Sider, Content } = AntLayout;
 
 // 获取应该高亮的菜单项 key
 const getSelectedMenuKey = (pathname: string): string => {
+  // 总览页面
+  if (pathname.startsWith('/overview')) {
+    return '/overview';
+  }
+
   // 应用相关页面
   if (pathname.startsWith('/app')) {
     return '/app';
@@ -140,6 +146,14 @@ export default function SideMenuLayout({ children }: { children: React.ReactNode
   // 构建菜单项
   const menuItems = useMemo(
     () => [
+      {
+        key: '/overview',
+        label: $i18n.get({
+          id: 'main.layouts.SideMenu.overview',
+          dm: '总览',
+        }),
+        icon: <DashboardOutlined />,
+      },
       {
         key: 'studio',
         label: $i18n.get({

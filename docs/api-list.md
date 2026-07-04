@@ -55,6 +55,7 @@ Spring AI Alibaba Admin 是多模块工程，含 4 个 Maven 子模块，全量�
 - [19. Chat 对话（OpenAPI）](#19-chat-对话openapi) 【对外·OpenAPI】
 - [20. OAuth2](#20-oauth2) 【对外·控制台/平台】
 - [21. 系统](#21-系统) 【对外·控制台/平台】
+- [21b. 平台总览](#21b-平台总览) 【对外·控制台/平台】
 - [22. 代码生成器（Graph Studio）](#22-代码生成器graph-studio) 【内部】
 - [23. Studio 调试 UI 后端](#23-studio-调试-ui-后端) 【内部】
 - [24. 示例应用](#24-示例应用) 【内部·示例】
@@ -738,6 +739,21 @@ Spring AI Alibaba Admin 是多模块工程，含 4 个 Maven 子模块，全量�
 **GET `/console/v1/system/health`**
 - 入参：无
 - 返回：`"ok"`（纯字符串）
+
+---
+
+## 21b. 平台总览
+
+**Base path：** `/console/v1` · 【对外·控制台/平台】
+
+| 方法 | 路径 | 说明 |
+|------|------|------|
+| GET | `/console/v1/overview` | 平台总览数据聚合（✅ 已上线） |
+
+**GET `/console/v1/overview`**
+- 入参：无
+- 返回：`Result<OverviewResponse>` — `{ stats: { prompts, versions, experiments, datasets, knowledgeBases, models: {total} }, experimentStatus: Map<String,Integer>, topPromptVersions: [{promptKey, preCount, releaseCount}], recentActivities: [{type, title, time, description}], docIndexStatus: [{kbId, kbName, totalDocs, indexedDocs, progress}] }`
+- 数据来源：admin 库（prompt/prompt_version/experiment/dataset）+ agentscope 库（knowledge_base/document/model_config），内存聚合
 
 ---
 

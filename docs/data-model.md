@@ -676,6 +676,7 @@ erDiagram
 | 模型 | ModelConfigInfo, ModelConfigResponse, ModelParameterDef |
 | 可观测 | OverviewStatsDTO, ServiceInfoDTO, ServicesResponseDTO, SpanEventDTO, SpanLinkDTO, TraceDetailDTO, TraceSpanDTO |
 | Prompt | Prompt, PromptRunResponse, PromptTemplate, PromptTemplateDetail, PromptVersion, PromptVersionDetail, PromptVersionDiffResult (含 VersionMeta {version, status, createTime}, DiffFields {template, variables, modelConfig}, DiffItem {changed, valueA, valueB}) |
+| Dashboard / Overview | OverviewResponse (含 OverviewStats {prompts, versions, experiments, datasets, knowledgeBases, models: StatItem}, StatItem {total}, TopPromptVersion {promptKey, preCount, releaseCount}, RecentActivity {type, title, time, description}, DocIndexStatus {kbId, kbName, totalDocs, indexedDocs, progress}) |
 | 其他 | VariableMapItem |
 | request/* | DataItemCreateFromTraceRequest, Dataset*Request（Create/List/Update/ItemCreate/ItemList/ItemUpdate/VersionCreate/VersionList/VersionUpdate/ExperimentsList）, Evaluator*Request（Create/Update/List/VersionCreate/VersionList/VersionUpdate/TemplateList/Test/ExperimentsList）, Experiment*Request（Create/List/EvaluatorResultDetailList）, ModelConfig*Request（Create/Query/Update）, OverviewQueryRequest, Prompt*Request（Create/Update/List/Run/VersionCreate/VersionList/TemplateList）, ServicesQueryRequest, TracesQueryRequest |
 

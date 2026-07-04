@@ -172,6 +172,10 @@ export default defineConfig({
       path: '/agent-schema',
       component: 'AgentSchema/index',
     },
+    {
+      path: '/overview',
+      component: 'Overview/index',
+    },
   ],
   clickToComponent: {},
   // tailwindcss: {},
