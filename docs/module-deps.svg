@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="760" viewBox="0 0 1000 760" font-family="Segoe UI, -apple-system, BlinkMacSystemFont, sans-serif">
+  <title>Spring AI Alibaba Admin — Module Dependency Graph</title>
+  <desc>Admin 子项目内部模块依赖图：仅项目自身模块，外部库省略。实线=编译依赖，虚线=parent/module聚合，红色箭头=循环依赖（本图无）。</desc>
+
+  <defs>
+    <filter id="shadow" x="-3%" y="-3%" width="106%" height="110%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#0000001a"/>
+    </filter>
+    <marker id="arrowSolid" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <path d="M0,0 L10,4 L0,8 Z" fill="#4a5568"/>
+    </marker>
+    <marker id="arrowDashed" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <path d="M0,0 L10,4 L0,8 Z" fill="#a0aec0"/>
+    </marker>
+    <marker id="arrowRed" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+      <path d="M0,0 L10,4 L0,8 Z" fill="#e53e3e"/>
+    </marker>
+  </defs>
+
+  <rect width="1000" height="760" fill="#f7fafc" rx="8"/>
+
+  <!-- Title -->
+  <text x="500" y="38" text-anchor="middle" font-size="24" font-weight="800" fill="#1a365d">Spring AI Alibaba Admin — Module Dependency Graph</text>
+  <text x="500" y="62" text-anchor="middle" font-size="12" fill="#718096">Internal modules only · arrow: A → B means A depends on B</text>
+
+  <!-- Root POM -->
+  <rect x="300" y="92" width="400" height="68" rx="12" fill="#e8eaf6" stroke="#3f51b5" stroke-width="2" filter="url(#shadow)"/>
+  <text x="500" y="122" text-anchor="middle" font-size="17" font-weight="800" fill="#283593">spring-ai-alibaba-admin</text>
+  <text x="500" y="144" text-anchor="middle" font-size="11" fill="#5c6bc0">root POM · packaging=pom · v1.0.0-SNAPSHOT</text>
+
+  <!-- server-start (blue) -->
+  <rect x="60" y="230" width="220" height="76" rx="10" fill="#e3f2fd" stroke="#1976d2" stroke-width="2" filter="url(#shadow)"/>
+  <text x="170" y="262" text-anchor="middle" font-size="15" font-weight="800" fill="#0d47a1">server-start</text>
+  <text x="170" y="284" text-anchor="middle" font-size="11" fill="#1565c0">Spring Boot entry point</text>
+
+  <!-- server-openapi (green) -->
+  <rect x="720" y="230" width="220" height="76" rx="10" fill="#e8f5e9" stroke="#388e3c" stroke-width="2" filter="url(#shadow)"/>
+  <text x="830" y="262" text-anchor="middle" font-size="15" font-weight="800" fill="#1b5e20">server-openapi</text>
+  <text x="830" y="284" text-anchor="middle" font-size="11" fill="#2e7d32">REST API definitions</text>
+
+  <!-- server-core (orange) -->
+  <rect x="390" y="360" width="220" height="76" rx="10" fill="#fff8e1" stroke="#f57c00" stroke-width="2" filter="url(#shadow)"/>
+  <text x="500" y="392" text-anchor="middle" font-size="15" font-weight="800" fill="#e65100">server-core</text>
+  <text x="500" y="414" text-anchor="middle" font-size="11" fill="#ef6c00">Shared business logic · DB · AI</text>
+
+  <!-- server-runtime (red) -->
+  <rect x="390" y="570" width="220" height="76" rx="10" fill="#ffebee" stroke="#d32f2f" stroke-width="2" filter="url(#shadow)"/>
+  <text x="500" y="602" text-anchor="middle" font-size="15" font-weight="800" fill="#b71c1c">server-runtime</text>
+  <text x="500" y="624" text-anchor="middle" font-size="11" fill="#c62828">Domain model · runtime base</text>
+
+  <!-- Dashed parent/module arrows (root -> each module) -->
+  <path d="M420,160 L220,230" fill="none" stroke="#a0aec0" stroke-width="1.8" stroke-dasharray="7 5" marker-end="url(#arrowDashed)"/>
+  <path d="M500,160 L500,360" fill="none" stroke="#a0aec0" stroke-width="1.8" stroke-dasharray="7 5" marker-end="url(#arrowDashed)"/>
+  <path d="M580,160 L780,230" fill="none" stroke="#a0aec0" stroke-width="1.8" stroke-dasharray="7 5" marker-end="url(#arrowDashed)"/>
+  <path d="M520,160 L520,570" fill="none" stroke="#a0aec0" stroke-width="1.8" stroke-dasharray="7 5" marker-end="url(#arrowDashed)"/>
+
+  <!-- Compile dependency arrows -->
+  <!-- start -> core -->
+  <path d="M280,268 L390,398" fill="none" stroke="#4a5568" stroke-width="2" marker-end="url(#arrowSolid)"/>
+  <!-- start -> runtime -->
+  <path d="M260,306 L410,570" fill="none" stroke="#4a5568" stroke-width="2" marker-end="url(#arrowSolid)"/>
+  <!-- start -> openapi -->
+  <path d="M280,250 L720,268" fill="none" stroke="#4a5568" stroke-width="2" marker-end="url(#arrowSolid)"/>
+  <!-- openapi -> core -->
+  <path d="M720,268 L610,398" fill="none" stroke="#4a5568" stroke-width="2" marker-end="url(#arrowSolid)"/>
+  <!-- core -> runtime -->
+  <path d="M500,436 L500,570" fill="none" stroke="#4a5568" stroke-width="2" marker-end="url(#arrowSolid)"/>
+
+  <!-- Legend -->
+  <rect x="60" y="500" width="260" height="146" rx="8" fill="#fff" stroke="#e2e8f0" filter="url(#shadow)"/>
+  <text x="80" y="528" font-size="13" font-weight="800" fill="#2d3748">Legend</text>
+
+  <line x1="80" y1="548" x2="140" y2="548" stroke="#a0aec0" stroke-width="1.8" stroke-dasharray="7 5" marker-end="url(#arrowDashed)"/>
+  <text x="150" y="553" font-size="11" fill="#4a5568">parent / module</text>
+
+  <line x1="80" y1="576" x2="140" y2="576" stroke="#4a5568" stroke-width="2" marker-end="url(#arrowSolid)"/>
+  <text x="150" y="581" font-size="11" fill="#4a5568">compile dependency</text>
+
+  <line x1="80" y1="604" x2="140" y2="604" stroke="#e53e3e" stroke-width="2" marker-end="url(#arrowRed)"/>
+  <text x="150" y="609" font-size="11" fill="#e53e3e">circular dependency</text>
+  <text x="80" y="628" font-size="10" fill="#a0aec0">(none detected)</text>
+
+  <!-- No circular dependencies badge -->
+  <rect x="720" y="500" width="220" height="80" rx="10" fill="#e8f5e9" stroke="#388e3c" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="830" y="532" text-anchor="middle" font-size="14" font-weight="800" fill="#1b5e20">✓ No circular dependencies</text>
+  <text x="830" y="556" text-anchor="middle" font-size="11" fill="#2e7d32">clean DAG: runtime ← core</text>
+  <text x="830" y="572" text-anchor="middle" font-size="11" fill="#2e7d32">← openapi / start</text>
+
+  <!-- Note about graph-core external dependency -->
+  <text x="500" y="722" text-anchor="middle" font-size="10" fill="#a0aec0">start 还引用 spring-ai-alibaba-graph-core v1.0.0.4 作为发布版外部依赖，未在本内部模块图中画出。</text>
+</svg>

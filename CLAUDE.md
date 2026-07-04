@@ -1,47 +1,55 @@
-# CLAUDE.md - AI Assistant Guide for Spring AI Alibaba
+# Spring AI Alibaba Project Guide (for AI coding assistants)
 
-This file provides guidance for AI assistants working with the Spring AI Alibaba codebase.
+> This guide keeps it concise — full detailed documentation lives in the `docs/` directory.
 
 ## Project Overview
 
-Spring AI Alibaba is a production-ready framework for building Agentic, Workflow, and Multi-agent applications. It is an implementation of the Spring AI framework tailored for Alibaba Cloud services and components. It provides a comprehensive ecosystem for developing AI-powered applications with built-in context engineering and human-in-the-loop support.
+Spring AI Alibaba is a production-ready framework for building **Agentic, Workflow, and Multi-agent** applications. It is an implementation of the Spring AI framework tailored for Alibaba Cloud services (DashScope, Nacos, etc.) and provides a complete ecosystem with built-in context engineering and human-in-the-loop support.
 
-**Key Features:**
+## Key Features
 
-- Multi-Agent Orchestration with built-in patterns
+- Multi-Agent Orchestration with built-in patterns (Sequential, Parallel, Routing, Loop)
 - Context Engineering with human-in-the-loop, context compaction, editing, model call limits
 - Graph-based workflow with conditional routing, nested graphs, parallel execution
 - A2A (Agent-to-Agent) support with Nacos integration
 - Rich model support (DashScope, OpenAI, DeepSeek) and MCP (Model Context Protocol)
-- One-stop visual agent platform
+- One-stop visual agent development platform
 
 ## Repository Structure
 
 ```
 spring-ai-alibaba/
-├── spring-ai-alibaba-agent-framework/ # Multi-agent framework (Sequential, Parallel, Routing, etc.)
-├── spring-ai-alibaba-graph-core/      # Runtime providing persistence, workflow orchestration, state mgmt
-├── spring-ai-alibaba-studio/          # Embedded UI for debugging agents visually
-├── spring-ai-alibaba-admin/           # One-stop Agent platform (visual dev, observability, MCP mgmt)
+├── spring-ai-alibaba-agent-framework/  # Multi-agent framework (pre-built agent patterns)
+├── spring-ai-alibaba-graph-core/          # Graph workflow runtime (persistence, state management, orchestration)
+├── spring-ai-alibaba-studio/            # Embedded visual debugging UI (frontend + backend)
+├── spring-ai-alibaba-admin/           # One-stop Agent platform (visual dev, observability, MCP management)
 ├── spring-ai-alibaba-bom/             # Bill of Materials for dependency management
-├── spring-boot-starters/              # Spring Boot Starters
+├── spring-boot-starters/             # Spring Boot auto-configuration starters
 │   ├── spring-ai-alibaba-starter-a2a-nacos/     # Nacos A2A communication
-│   ├── spring-ai-alibaba-starter-builtin-nodes/ # Built-in workflow nodes
+│   ├── spring-ai-alibaba-starter-builtin-nodes/    # Built-in workflow nodes
 │   ├── spring-ai-alibaba-starter-config-nacos/  # Dynamic config with Nacos
 │   └── spring-ai-alibaba-starter-graph-observation/ # Observability
 ├── examples/                          # Example applications
-│   ├── chatbot/                       # Chatbot example
+│   ├── chatbot/                       # Basic chatbot example
 │   ├── deepresearch/                  # Deep research agent example
 │   └── documentation/                 # Documentation examples
 ├── tools/                             # Build and linting tools
-└── docs/                              # Documentation
+└── docs/                              # Documentation (all detailed docs here)
+    ├── setup-guide.md                   # Newcomer environment setup guide → [docs/setup-guide.md](docs/setup-guide.md)
+    ├── env-checklist.md                 # Environment dependency checklist (middleware, ports, env vars) → [docs/env-checklist.md](docs/env-checklist.md)
+    ├── api-list.md                      # REST API endpoint list, grouped by module → [docs/api-list.md](docs/api-list.md)
+    ├── data-model.md                    # Core data model, entity/DTO separation → [docs/data-model.md](docs/data-model.md)
+    ├── smoke-test-result.md             # Core API smoke test results → [docs/smoke-test-result.md](docs/smoke-test-result.md)
+    ├── data-model-er.svg               # ER diagram SVG → [docs/data-model-er.svg](docs/data-model-er.svg)
+    ├── module-deps.svg                # Module dependency graph → [docs/module-deps.svg](docs/module-deps.svg)
+    └── external-deps.svg              # External dependency graph → [docs/external-deps.svg](docs/external-deps.svg)
 ```
 
-## Build System
+## Building
 
 ### Prerequisites
 
-- **JDK**: 17 (Required by `java.version` property)
+- **JDK**: 17 (required by the `java.version` project property)
 - **Maven**: 3.6+
 - **Git**
 
@@ -49,102 +57,50 @@ spring-ai-alibaba/
 
 ```shell
 # Build the entire project (skip tests)
-./mvnw -B package -DskipTests=true
+./mvnw -B package -DskipTests
 
 # Build a specific module
-./mvnw -pl :spring-ai-alibaba-agent-framework -B package -DskipTests=true
+./mvnw -pl :<module-name> -B package -DskipTests
 
-# Clean project
+# Clean the project
 ./mvnw clean
 
-# Run tests
+# Run all tests
 ./mvnw test
-
-# Run linting checks (using Makefile)
-make lint
-make licenses-check
 ```
 
-## Architecture & Key Concepts
-
-### Core Components
-
-- **Agent Framework**: Built-in agents like `SequentialAgent`, `ParallelAgent`, `RoutingAgent`, `LoopAgent`.
-- **Graph Core**: Underlying engine for stateful agents, supporting persistence (PostgreSQL, MySQL, Oracle, MongoDB, Redis, File).
-- **A2A (Agent-to-Agent)**: Enables agents to seek and communicate with each other using Nacos as a registry.
-- **Admin & Studio**: Provides visual tools for developing and debugging agent workflows.
-
-### Technology Stack
-
-- **Framework**: Spring Boot 3.5.x, Spring AI 1.1.x
-- **Cloud Integration**: Alibaba Cloud DashScope, Nacos (Service Discovery & Config)
-- **Observability**: Spring Cloud Observation (Micrometer/OpenTelemetry)
-
-## Code Style & Conventions
-
-### General Guidelines
+## Coding Conventions
 
 - Follow **Spring AI** standard code formatting.
 - Use **Apache 2.0** license headers for all Java files.
-- **Java 17** features are encouraged (records, switch expressions, text blocks).
-- Avoid `System.out.println` - use SLF4J logging.
+- **Java 17** language features are encouraged (records, switch expressions, text blocks).
+- Avoid `System.out.println` — use SLF4J logging.
 - Use `final` for local variables and parameters where appropriate.
 - Use Lombok annotations (`@Data`, `@Slf4j`, etc.) to reduce boilerplate.
 
-### Linting & Formatting
+## Documentation Index
 
-The project uses `make` for linting tasks:
-- `make codespell`: Checks for spelling errors.
-- `make yaml-lint`: Checks YAML file formatting.
-- `make licenses-check`: Verifies license headers.
+- [REST API 接口清单](docs/api-list.md) — grouped by module, complete endpoint documentation
+- [核心数据模型](docs/data-model.md) — entity/DTO separation, full table definitions + relation map
+- [核心数据模型 ER 图](docs/data-model-er.svg) — visual entity relation diagram
 
-### License Header
+## AI Coding Tips
 
-```java
-/*
- * Copyright 2025-2026 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-```
+1.  **JDK Version**: Project targets JDK 17 — use appropriate language features.
+2.  **Spring Boot**: Uses Spring Boot 3.x — be aware of the `jakarta.*` namespace vs `javax.*`.
+3.  **Dependencies**: Check `spring-ai-alibaba-bom` or the parent POM for version management.
+4.  **Makefile**: Use the root Makefile for linting and license checks.
+5.  **Adding Features**: When adding new features, prefer putting them in `spring-ai-alibaba-agent-framework` (for generic agent features) or `spring-boot-starters` (for Spring Boot starters) depending on scope.
 
-## Testing
+## Prohibited Areas (do NOT edit these unless explicitly asked)
 
-### Frameworks
+- `.git/`
+- `node_modules/`
+- `build/`
+- `*.iml`
+- `*.swp`, `*.swo`, `*~`
+- `.idea/`
 
-- **JUnit 5** (`org.junit.jupiter`)
-- **Mockito**
+## Legacy / Historical Notes
 
-### Running Tests
-
-```shell
-# Run all tests
-./mvnw test
-
-# Run a specific test class
-./mvnw -pl :<module-name> -Dtest=<TestClassName> test
-```
-
-## Tips for AI Assistants
-
-1.  **JDK Version**: Project targets JDK 17. Use appropriate language features.
-2.  **Spring Boot**: Uses Spring Boot 3.x. Be aware of `jakarta.*` namespace vs `javax.*`.
-3.  **Dependencies**: Check `spring-ai-alibaba-bom` or parent pom for version management.
-4.  **Makefile**: Use the Makefile in the root for project maintenance tasks (linting, license checks).
-5.  **Structure**: When adding new features, prefer creating or updating modules within `spring-ai-alibaba-agent-framework` or `spring-boot-starters` depending on the scope.
-
-## Important Links
-
-- **Issues**: [https://github.com/alibaba/spring-ai-alibaba/issues](https://github.com/alibaba/spring-ai-alibaba/issues)
-- **Source**: [https://github.com/alibaba/spring-ai-alibaba](https://github.com/alibaba/spring-ai-alibaba)
-- **Contributing**: [CONTRIBUTING.md](CONTRIBUTING.md)
+> (leave this section empty for project maintainer to fill historical change notes)

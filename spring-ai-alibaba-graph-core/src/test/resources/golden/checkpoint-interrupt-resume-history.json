@@ -1,0 +1,18 @@
+[ {
+  "nodeId" : "node_b",
+  "values" : {
+    "messages" : [ "node_a:step:1", "node_b:step:3" ],
+    "steps" : 3
+  }
+}, {
+  "nodeId" : "node_a",
+  "values" : {
+    "messages" : [ "node_a:step:1" ],
+    "steps" : 1
+  }
+}, {
+  "nodeId" : "__START__",
+  "values" : {
+    "steps" : 0
+  }
+} ]

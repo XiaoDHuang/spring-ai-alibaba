@@ -1,0 +1,204 @@
+#
+# Copyright 2024-2026 the original author or authors.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     https://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+name: 🧪 Test
+
+on:
+  push:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+env:
+  MAVEN_OPTS: '-Xmx2g -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn'
+  REVISION: '1.0.0-SNAPSHOT'
+
+permissions:
+  contents: read
+  checks: write
+
+jobs:
+
+  # =========================================================================
+  # Job 1 — Unit tests (root reactor: graph-core / studio / sandbox / agent)
+  # No middleware required.  Fast path (~10 min).
+  # =========================================================================
+  unit-test:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Compile
+        run: ./mvnw compile -B -q
+
+      - name: Run unit tests
+        run: ./mvnw test -B -DfailIfNoTests=false
+
+      - name: Upload unit test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: surefire-reports-unit
+          path: '**/target/surefire-reports/*.xml'
+          retention-days: 7
+
+      - name: Publish test summary
+        if: always()
+        uses: dorny/test-reporter@v1
+        with:
+          name: Unit Tests
+          path: '**/target/surefire-reports/*.xml'
+          reporter: java-junit
+
+  # =========================================================================
+  # Job 2 — Admin integration tests (needs MySQL + Redis)
+  # Slower path (~15 min).  Runs after unit-test passes.
+  # =========================================================================
+  integration-test:
+    runs-on: ubuntu-22.04
+    needs: unit-test
+
+    services:
+      mysql:
+        image: mysql:8.0.35
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: admin
+          MYSQL_USER: admin
+          MYSQL_PASSWORD: admin
+        ports:
+          - '3306:3306'
+        options: >-
+          --health-cmd "mysqladmin ping -h localhost"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 10
+
+      redis:
+        image: redis:7.2.5
+        ports:
+          - '6379:6379'
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      # -------------------------------------------------------------------
+      # Initialize MySQL schema from project SQL files
+      # -------------------------------------------------------------------
+      - name: Initialize MySQL schema
+        run: |
+          echo "Waiting for MySQL to be ready..."
+          for i in $(seq 1 30); do
+            if mysql -h127.0.0.1 -uadmin -padmin -e "SELECT 1" &>/dev/null; then
+              echo "MySQL ready"
+              break
+            fi
+            sleep 2
+          done
+          echo "Loading admin-schema.sql..."
+          mysql -h127.0.0.1 -uadmin -padmin admin < spring-ai-alibaba-admin/docker/middleware/init/mysql/admin-schema.sql
+          echo "Loading agentscope-schema.sql..."
+          mysql -h127.0.0.1 -uadmin -padmin admin < spring-ai-alibaba-admin/docker/middleware/init/mysql/agentscope-schema.sql
+          echo "Verifying schema..."
+          mysql -h127.0.0.1 -uadmin -padmin -e "SHOW TABLES;" admin
+          echo "Schema initialized successfully"
+
+      # -------------------------------------------------------------------
+      # Install admin modules (with revision fix)
+      # -------------------------------------------------------------------
+      - name: Build admin modules
+        run: |
+          cd spring-ai-alibaba-admin
+          ../mvnw install -B -DskipTests -Drevision=${REVISION}
+          # Workaround: flatten-maven-plugin not configured in admin POM,
+          # fix ${revision} references in the installed POMs so child
+          # modules can resolve their parent.
+          ADMIN_REPO="${HOME}/.m2/repository/com/alibaba/cloud/ai"
+          for pom in $(find "${ADMIN_REPO}" -name '*.pom' -path '*admin*' 2>/dev/null); do
+            if grep -q '\${revision}' "${pom}" 2>/dev/null; then
+              sed -i "s/\${revision}/${REVISION}/g" "${pom}"
+              echo "Fixed: ${pom}"
+            fi
+          done
+
+      # -------------------------------------------------------------------
+      # Run admin integration tests
+      # -------------------------------------------------------------------
+      - name: Run admin integration tests
+        run: |
+          cd spring-ai-alibaba-admin
+          ../mvnw test -B -DfailIfNoTests=false -pl spring-ai-alibaba-admin-server-start
+        env:
+          SPRING_DATASOURCE_URL: jdbc:mysql://localhost:3306/admin?useUnicode=true&characterEncoding=utf8&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
+          SPRING_DATASOURCE_USERNAME: admin
+          SPRING_DATASOURCE_PASSWORD: admin
+          SPRING_REDIS_HOST: localhost
+          SPRING_REDIS_PORT: 6379
+
+      - name: Upload integration test reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: surefire-reports-integration
+          path: '**/target/surefire-reports/*.xml'
+          retention-days: 7
+
+      - name: Publish integration test summary
+        if: always()
+        uses: dorny/test-reporter@v1
+        with:
+          name: Integration Tests
+          path: '**/target/surefire-reports/*.xml'
+          reporter: java-junit
+
+  # =========================================================================
+  # Job 3 — Result gate (fails if either job failed, blocks merge)
+  # =========================================================================
+  result:
+    if: always()
+    needs: [unit-test, integration-test]
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check results
+        run: |
+          echo "unit-test:   ${{ needs.unit-test.result }}"
+          echo "integration: ${{ needs.integration-test.result }}"
+          if [ "${{ needs.unit-test.result }}" != "success" ]; then
+            echo "❌ Unit tests failed"
+            exit 1
+          fi
+          if [ "${{ needs.integration-test.result }}" != "success" ]; then
+            echo "❌ Integration tests failed"
+            exit 1
+          fi
+          echo "✅ All tests passed"

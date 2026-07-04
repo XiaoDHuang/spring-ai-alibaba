@@ -1,0 +1,36 @@
+[ {
+  "nodeId" : "agent",
+  "values" : {
+    "counter" : 3,
+    "messages" : [ "tool_calls", "tool_result", "tool_calls", "tool_result", "finished" ]
+  }
+}, {
+  "nodeId" : "tools",
+  "values" : {
+    "counter" : 2,
+    "messages" : [ "tool_calls", "tool_result", "tool_calls", "tool_result" ]
+  }
+}, {
+  "nodeId" : "agent",
+  "values" : {
+    "counter" : 2,
+    "messages" : [ "tool_calls", "tool_result", "tool_calls" ]
+  }
+}, {
+  "nodeId" : "tools",
+  "values" : {
+    "counter" : 1,
+    "messages" : [ "tool_calls", "tool_result" ]
+  }
+}, {
+  "nodeId" : "agent",
+  "values" : {
+    "counter" : 1,
+    "messages" : [ "tool_calls" ]
+  }
+}, {
+  "nodeId" : "__START__",
+  "values" : {
+    "counter" : 0
+  }
+} ]

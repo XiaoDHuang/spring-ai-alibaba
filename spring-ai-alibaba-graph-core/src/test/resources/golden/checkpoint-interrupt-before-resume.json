@@ -1,0 +1,10 @@
+{
+  "exceptionMessage" : "(none)",
+  "exceptionThrown" : false,
+  "nextNodeId" : "node_b",
+  "nodeId" : "node_a",
+  "values" : {
+    "messages" : [ "node_a:step:1" ],
+    "steps" : 1
+  }
+}

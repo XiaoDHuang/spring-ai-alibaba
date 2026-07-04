@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1320" height="1080" viewBox="0 0 1320 1080" font-family="Segoe UI, -apple-system, BlinkMacSystemFont, sans-serif">
+  <title>Spring AI Alibaba Admin — External Dependencies</title>
+  <desc>Admin 子项目对外依赖全景：关键 Java 库（蓝）、中间件（橙）、外部 API（紫）。来源：pom.xml / application.yml / README / docker-compose.yaml。</desc>
+
+  <defs>
+    <linearGradient id="javaGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4299e1"/><stop offset="100%" stop-color="#3182ce"/>
+    </linearGradient>
+    <linearGradient id="mwGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ed8936"/><stop offset="100%" stop-color="#dd6b20"/>
+    </linearGradient>
+    <linearGradient id="apiGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#9f7aea"/><stop offset="100%" stop-color="#805ad5"/>
+    </linearGradient>
+    <linearGradient id="hubGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4a5568"/><stop offset="100%" stop-color="#2d3748"/>
+    </linearGradient>
+    <filter id="shadow" x="-2%" y="-2%" width="104%" height="108%">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#00000022"/>
+    </filter>
+    <filter id="shadowLight" x="-2%" y="-2%" width="104%" height="106%">
+      <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#00000018"/>
+    </filter>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+      <path d="M0,0 L10,4 L0,8 Z" fill="#3182ce"/>
+    </marker>
+    <marker id="arrowOrange" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+      <path d="M0,0 L10,4 L0,8 Z" fill="#dd6b20"/>
+    </marker>
+    <marker id="arrowPurple" markerWidth="10" markerHeight="8" refX="8" refY="4" orient="auto">
+      <path d="M0,0 L10,4 L0,8 Z" fill="#805ad5"/>
+    </marker>
+  </defs>
+
+  <rect width="1320" height="1080" fill="#f7fafc" rx="8"/>
+
+  <!-- Title -->
+  <text x="660" y="42" text-anchor="middle" font-size="24" font-weight="800" fill="#1a365d">Spring AI Alibaba Admin — External Dependencies</text>
+  <text x="660" y="66" text-anchor="middle" font-size="12" fill="#718096">Sourced from pom.xml · application.yml · README · docker-compose.yaml</text>
+
+  <!-- ==================== HUB ==================== -->
+  <rect x="460" y="430" width="400" height="110" rx="14" fill="url(#hubGrad)" filter="url(#shadow)"/>
+  <text x="660" y="466" text-anchor="middle" font-size="18" font-weight="800" fill="#fff">spring-ai-alibaba-admin</text>
+  <text x="660" y="492" text-anchor="middle" font-size="12" fill="#e2e8f0">Agent Studio · Java 17 · Spring Boot 3.3.6</text>
+  <text x="660" y="512" text-anchor="middle" font-size="11" fill="#a0aec0">v1.0.0-SNAPSHOT · port :8080</text>
+  <text x="660" y="528" text-anchor="middle" font-size="9.5" fill="#718096">Admin 子项目专属依赖图（非整个 Spring AI Alibaba 主框架）</text>
+
+  <!-- ==================== TOP: KEY JAVA LIBRARIES ==================== -->
+  <rect x="30" y="86" width="1260" height="312" fill="#ebf8ff" stroke="#3182ce" stroke-width="1.5" rx="10" filter="url(#shadowLight)"/>
+  <rect x="30" y="86" width="1260" height="30" fill="url(#javaGrad)" rx="10"/>
+  <rect x="30" y="108" width="1260" height="8" fill="url(#javaGrad)"/>
+  <text x="660" y="107" text-anchor="middle" font-size="14" font-weight="bold" fill="#fff">KEY JAVA LIBRARIES</text>
+
+  <!-- Arrow hub -> java cluster -->
+  <path d="M470,490 L310,398" fill="none" stroke="#3182ce" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrowBlue)"/>
+  <path d="M660,430 L660,398" fill="none" stroke="#3182ce" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrowBlue)"/>
+  <path d="M850,490 L1010,398" fill="none" stroke="#3182ce" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrowBlue)"/>
+  <circle cx="660" cy="412" r="12" fill="#3182ce"/>
+  <text x="660" y="416" text-anchor="middle" font-size="10" font-weight="bold" fill="#fff">13</text>
+
+  <!-- Java Row 1 -->
+  <g>
+    <rect x="54" y="130" width="228" height="78" fill="#fff" stroke="#90cdf4" stroke-width="1" rx="6" filter="url(#shadowLight)"/>
+    <text x="168" y="154" text-anchor="middle" font-size="12" font-weight="800" fill="#2b6cb0">Spring AI Alibaba</text>
+    <text x="168" y="172" text-anchor="middle" font-size="10" fill="#4a5568">spring-ai-alibaba-core</text>
+    <text x="168" y="186" text-anchor="middle" font-size="10" fill="#4a5568">spring-ai-alibaba-graph-core</text>
+    <text x="168" y="200" text-anchor="middle" font-size="9" fill="#a0aec0">v1.0.0.3 / v1.0.0.4</text>
+  </g>
+  <g>
+    <rect x="294" y="130" width="228" height="78" fill="#fff" stroke="#90cdf4" stroke-width="1" rx="6" filter="url(#shadowLight)"/>
+    <text x="408" y="154" text-anchor="middle" font-size="12" font-weight="800" fill="#2b6cb0">Spring AI</text>
+    <text x="408" y="172" text-anchor="middle" font-size="10" fill="#4a5568">openai · deepseek · ollama</text>
+    <text x="408" y="186" text-anchor="middle" font-size="10" fill="#4a5568">elasticsearch-store · pdf/tika</text>
+    <text x="408" y="200" text-anchor="middle" font-size="9" fill="#a0aec0">v1.1.2</text>
+  </g>
+  <g>
+    <rect x="534" y="130" width="228" height="78" fill="#fff" stroke="#90cdf4" stroke-width="1" rx="6" filter="url(#shadowLight)"/>
+    <text x="648" y="154" text-anchor="middle" font-size="12" font-weight="800" fill="#2b6cb0">Spring Boot</text>
+    <text x="648" y="172" text-anchor="middle" font-size="10" fill="#4a5568">web · jpa · actuator</text>
+    <text x="648" y="186" text-anchor="middle" font-size="10" fill="#4a5568">validation · autoconfigure</text>
+    <text x="648" y="200" text-anchor="middle" font-size="9" fill="#a0aec0">v3.3.6</text>
+  </g>
+  <g>
+    <rect x="774" y="130" width="228" height="78" fill="#fff" stroke="#90cdf4" stroke-width="1" rx="6" filter="url(#shadowLight)"/>
+    <text x="888" y="154" text-anchor="middle" font-size="12" font-weight="800" fill="#2b6cb0">MyBatis-Plus + Druid</text>
+    <text x="888" y="172" text-anchor="middle" font-size="10" fill="#4a5568">mybatis-plus-spring-boot3</text>
+    <text x="888" y="186" text-anchor="middle" font-size="10" fill="#4a5568">druid-spring-boot-starter</text>
+    <text x="888" y="200" text-anchor="middle" font-size="9" fill="#a0aec0">v3.5.9 / v1.2.20</text>
+  </g>
+  <g>
+    <rect x="1014" y="130" width="228" height="78" fill="#fff" stroke="#90cdf4" stroke-width="1" rx="6" filter="url(#shadowLight)"/>
+    <text x="1128" y="154" text-anchor="middle" font-size="12" font-weight="800" fill="#2b6cb0">Redisson</text>
+    <text x="1128" y="172" text-anchor="middle" font-size="10" fill="#4a5568">redisson-spring-boot-starter</text>
+    <text x="1128" y="186" text-anchor="middle" font-size="10" fill="#4a5568">Distributed cache &amp; lock</text>
+    <text x="1128" y="200" text-anchor="middle" font-size="9" fill="#a0aec0">v3.27.2</text>
+  </g>
+
+  <!-- Java Row 2 -->
+  <g>
+    <rect x="54" y="216" width="228" height="78" fill="#fff" stroke="#90cdf4" stroke-width="1" rx="6" filter="url(#shadowLight)"/>
+    <text x="168" y="240" text-anchor="middle" font-size="12" font-weight="800" fill="#2b6cb0">OTel / Micrometer</text>
+    <text x="168" y="258" text-anchor="middle" font-size="10" fill="#4a5568">micrometer-tracing-bridge-otel</text>
+    <text x="168" y="272" text-anchor="middle" font-size="10" fill="#4a5568">opentelemetry-exporter-otlp</text>
+    <text x="168" y="286" text-anchor="middle" font-size="9" fill="#a0aec0">micrometer-registry-otlp</text>
+  </g>
+  <g>
+    <rect x="294" y="216" width="228" height="78" fill="#fff" stroke="#90cdf4" stroke-width="1" rx="6" filter="url(#shadowLight)"/>
+    <text x="408" y="240" text-anchor="middle" font-size="12" font-weight="800" fill="#2b6cb0">RocketMQ Client</text>
+    <text x="408" y="258" text-anchor="middle" font-size="10" fill="#4a5568">rocketmq-client-java</text>
+    <text x="408" y="272" text-anchor="middle" font-size="10" fill="#4a5568">Async doc indexing</text>
+    <text x="408" y="286" text-anchor="middle" font-size="9" fill="#a0aec0">v5.0.7</text>
+  </g>
+  <g>
+    <rect x="534" y="216" width="228" height="78" fill="#fff" stroke="#90cdf4" stroke-width="1" rx="6" filter="url(#shadowLight)"/>
+    <text x="648" y="240" text-anchor="middle" font-size="12" font-weight="800" fill="#2b6cb0">Elasticsearch Java</text>
+    <text x="648" y="258" text-anchor="middle" font-size="10" fill="#4a5568">elasticsearch-java</text>
+    <text x="648" y="272" text-anchor="middle" font-size="10" fill="#4a5568">elasticsearch-rest-client</text>
+    <text x="648" y="286" text-anchor="middle" font-size="9" fill="#a0aec0">v8.13.4</text>
+  </g>
+  <g>
+    <rect x="774" y="216" width="228" height="78" fill="#fff" stroke="#90cdf4" stroke-width="1" rx="6" filter="url(#shadowLight)"/>
+    <text x="888" y="240" text-anchor="middle" font-size="12" font-weight="800" fill="#2b6cb0">GraalVM Polyglot</text>
+    <text x="888" y="258" text-anchor="middle" font-size="10" fill="#4a5568">js · python-language</text>
+    <text x="888" y="272" text-anchor="middle" font-size="10" fill="#4a5568">truffle-api · polyglot</text>
+    <text x="888" y="286" text-anchor="middle" font-size="9" fill="#a0aec0">v24.2.1</text>
+  </g>
+  <g>
+    <rect x="1014" y="216" width="228" height="78" fill="#fff" stroke="#90cdf4" stroke-width="1" rx="6" filter="url(#shadowLight)"/>
+    <text x="1128" y="240" text-anchor="middle" font-size="12" font-weight="800" fill="#2b6cb0">Auth / Security</text>
+    <text x="1128" y="258" text-anchor="middle" font-size="10" fill="#4a5568">jjwt v0.12.6</text>
+    <text x="1128" y="272" text-anchor="middle" font-size="10" fill="#4a5568">argon2-jvm v2.11</text>
+    <text x="1128" y="286" text-anchor="middle" font-size="9" fill="#a0aec0">password hash · token sign</text>
+  </g>
+
+  <!-- Java Row 3 -->
+  <g>
+    <rect x="54" y="302" width="228" height="78" fill="#fff" stroke="#90cdf4" stroke-width="1" rx="6" filter="url(#shadowLight)"/>
+    <text x="168" y="326" text-anchor="middle" font-size="12" font-weight="800" fill="#2b6cb0">Swagger Parser</text>
+    <text x="168" y="344" text-anchor="middle" font-size="10" fill="#4a5568">swagger-parser v2.1.22</text>
+    <text x="168" y="358" text-anchor="middle" font-size="10" fill="#4a5568">swagger-inflector · models</text>
+    <text x="168" y="372" text-anchor="middle" font-size="9" fill="#a0aec0">OpenAPI parsing</text>
+  </g>
+  <g>
+    <rect x="294" y="302" width="228" height="78" fill="#fff" stroke="#90cdf4" stroke-width="1" rx="6" filter="url(#shadowLight)"/>
+    <text x="408" y="326" text-anchor="middle" font-size="12" font-weight="800" fill="#2b6cb0">MCP SDK</text>
+    <text x="408" y="344" text-anchor="middle" font-size="10" fill="#4a5568">io.modelcontextprotocol.sdk</text>
+    <text x="408" y="358" text-anchor="middle" font-size="10" fill="#4a5568">Model Context Protocol</text>
+    <text x="408" y="372" text-anchor="middle" font-size="9" fill="#a0aec0">v0.9.0</text>
+  </g>
+  <g>
+    <rect x="534" y="302" width="228" height="78" fill="#fff" stroke="#90cdf4" stroke-width="1" rx="6" filter="url(#shadowLight)"/>
+    <text x="648" y="326" text-anchor="middle" font-size="12" font-weight="800" fill="#2b6cb0">JGraphT + Guava</text>
+    <text x="648" y="344" text-anchor="middle" font-size="10" fill="#4a5568">jgrapht-core v1.5.2</text>
+    <text x="648" y="358" text-anchor="middle" font-size="10" fill="#4a5568">guava v33.4.6-jre · ognl</text>
+    <text x="648" y="372" text-anchor="middle" font-size="9" fill="#a0aec0">graph / expression utils</text>
+  </g>
+  <g>
+    <rect x="774" y="302" width="228" height="78" fill="#fff" stroke="#90cdf4" stroke-width="1" rx="6" filter="url(#shadowLight)"/>
+    <text x="888" y="326" text-anchor="middle" font-size="12" font-weight="800" fill="#2b6cb0">Spring Initializr</text>
+    <text x="888" y="344" text-anchor="middle" font-size="10" fill="#4a5568">initializr-generator-spring</text>
+    <text x="888" y="358" text-anchor="middle" font-size="10" fill="#4a5568">initializr-web · metadata</text>
+    <text x="888" y="372" text-anchor="middle" font-size="9" fill="#a0aec0">v0.22.0 · code scaffolding</text>
+  </g>
+  <g>
+    <rect x="1014" y="302" width="228" height="78" fill="#fff" stroke="#90cdf4" stroke-width="1" rx="6" filter="url(#shadowLight)"/>
+    <text x="1128" y="326" text-anchor="middle" font-size="12" font-weight="800" fill="#2b6cb0">ASM + Nashorn</text>
+    <text x="1128" y="344" text-anchor="middle" font-size="10" fill="#4a5568">asm v9.5 (bytecode)</text>
+    <text x="1128" y="358" text-anchor="middle" font-size="10" fill="#4a5568">nashorn-core v15.4</text>
+    <text x="1128" y="372" text-anchor="middle" font-size="9" fill="#a0aec0">JS / bytecode manipulation</text>
+  </g>
+
+  <!-- ==================== BOTTOM LEFT: MIDDLEWARE ==================== -->
+  <rect x="30" y="580" width="620" height="260" fill="#fffaf0" stroke="#dd6b20" stroke-width="1.5" rx="10" filter="url(#shadowLight)"/>
+  <rect x="30" y="580" width="620" height="30" fill="url(#mwGrad)" rx="10"/>
+  <rect x="30" y="602" width="620" height="8" fill="url(#mwGrad)"/>
+  <text x="340" y="601" text-anchor="middle" font-size="14" font-weight="bold" fill="#fff">MIDDLEWARE (self-hosted · Docker Compose)</text>
+
+  <!-- Arrow hub -> middleware -->
+  <path d="M460,540 L340,580" fill="none" stroke="#dd6b20" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrowOrange)"/>
+  <circle cx="390" cy="562" r="12" fill="#dd6b20"/>
+  <text x="390" y="566" text-anchor="middle" font-size="10" font-weight="bold" fill="#fff">6</text>
+
+  <!-- MW Row 1 -->
+  <g>
+    <rect x="54" y="624" width="184" height="86" fill="#fff" stroke="#fbd38d" stroke-width="1" rx="6" filter="url(#shadowLight)"/>
+    <text x="146" y="648" text-anchor="middle" font-size="12" font-weight="800" fill="#9c4221">MySQL 8</text>
+    <text x="146" y="666" text-anchor="middle" font-size="10" fill="#4a5568">Primary RDBMS</text>
+    <text x="146" y="680" text-anchor="middle" font-size="10" fill="#4a5568">All business tables</text>
+    <text x="146" y="696" text-anchor="middle" font-size="9" fill="#a0aec0">:3306 v8.0.35</text>
+  </g>
+  <g>
+    <rect x="248" y="624" width="184" height="86" fill="#fff" stroke="#fbd38d" stroke-width="1" rx="6" filter="url(#shadowLight)"/>
+    <text x="340" y="648" text-anchor="middle" font-size="12" font-weight="800" fill="#9c4221">Redis 7</text>
+    <text x="340" y="666" text-anchor="middle" font-size="10" fill="#4a5568">Session cache</text>
+    <text x="340" y="680" text-anchor="middle" font-size="10" fill="#4a5568">Distributed lock</text>
+    <text x="340" y="696" text-anchor="middle" font-size="9" fill="#a0aec0">:6379 v7.2.5</text>
+  </g>
+  <g>
+    <rect x="442" y="624" width="184" height="86" fill="#fff" stroke="#fbd38d" stroke-width="1" rx="6" filter="url(#shadowLight)"/>
+    <text x="534" y="648" text-anchor="middle" font-size="12" font-weight="800" fill="#9c4221">RocketMQ 5</text>
+    <text x="534" y="666" text-anchor="middle" font-size="10" fill="#4a5568">Async doc index</text>
+    <text x="534" y="680" text-anchor="middle" font-size="10" fill="#4a5568">RAG event bus</text>
+    <text x="534" y="696" text-anchor="middle" font-size="9" fill="#a0aec0">:18080 v5.3.2</text>
+  </g>
+
+  <!-- MW Row 2 -->
+  <g>
+    <rect x="54" y="718" width="184" height="86" fill="#fff" stroke="#fbd38d" stroke-width="1" rx="6" filter="url(#shadowLight)"/>
+    <text x="146" y="742" text-anchor="middle" font-size="12" font-weight="800" fill="#9c4221">Elasticsearch</text>
+    <text x="146" y="760" text-anchor="middle" font-size="10" fill="#4a5568">Vector store (RAG)</text>
+    <text x="146" y="774" text-anchor="middle" font-size="10" fill="#4a5568">Trace index · search</text>
+    <text x="146" y="790" text-anchor="middle" font-size="9" fill="#a0aec0">:9200 v9.1.2</text>
+  </g>
+  <g>
+    <rect x="248" y="718" width="184" height="86" fill="#fff" stroke="#fbd38d" stroke-width="1" rx="6" filter="url(#shadowLight)"/>
+    <text x="340" y="742" text-anchor="middle" font-size="12" font-weight="800" fill="#9c4221">Nacos</text>
+    <text x="340" y="760" text-anchor="middle" font-size="10" fill="#4a5568">Config center</text>
+    <text x="340" y="774" text-anchor="middle" font-size="10" fill="#4a5568">Prompt sync to agents</text>
+    <text x="340" y="790" text-anchor="middle" font-size="9" fill="#a0aec0">:8848 latest</text>
+  </g>
+  <g>
+    <rect x="442" y="718" width="184" height="86" fill="#fff" stroke="#fbd38d" stroke-width="1" rx="6" filter="url(#shadowLight)"/>
+    <text x="534" y="742" text-anchor="middle" font-size="12" font-weight="800" fill="#9c4221">LoongCollector</text>
+    <text x="534" y="760" text-anchor="middle" font-size="10" fill="#4a5568">OTel OTLP receiver</text>
+    <text x="534" y="774" text-anchor="middle" font-size="10" fill="#4a5568">Pushes spans → ES</text>
+    <text x="534" y="790" text-anchor="middle" font-size="9" fill="#a0aec0">:4318 v3.1.4</text>
+  </g>
+
+  <!-- ==================== BOTTOM RIGHT: EXTERNAL APIs ==================== -->
+  <rect x="670" y="580" width="620" height="260" fill="#faf5ff" stroke="#805ad5" stroke-width="1.5" rx="10" filter="url(#shadowLight)"/>
+  <rect x="670" y="580" width="620" height="30" fill="url(#apiGrad)" rx="10"/>
+  <rect x="670" y="602" width="620" height="8" fill="url(#apiGrad)"/>
+  <text x="980" y="601" text-anchor="middle" font-size="14" font-weight="bold" fill="#fff">EXTERNAL APIs / CLOUD SERVICES</text>
+
+  <!-- Arrow hub -> APIs -->
+  <path d="M860,540 L980,580" fill="none" stroke="#805ad5" stroke-width="2" stroke-dasharray="6 4" marker-end="url(#arrowPurple)"/>
+  <circle cx="930" cy="562" r="12" fill="#805ad5"/>
+  <text x="930" y="566" text-anchor="middle" font-size="10" font-weight="bold" fill="#fff">6</text>
+
+  <!-- API Row 1 -->
+  <g>
+    <rect x="694" y="624" width="184" height="86" fill="#fff" stroke="#d6bcfa" stroke-width="1" rx="6" filter="url(#shadowLight)"/>
+    <text x="786" y="648" text-anchor="middle" font-size="12" font-weight="800" fill="#553c9a">OpenAI</text>
+    <text x="786" y="666" text-anchor="middle" font-size="10" fill="#4a5568">Chat · Embedding</text>
+    <text x="786" y="680" text-anchor="middle" font-size="10" fill="#4a5568">Image generation</text>
+    <text x="786" y="696" text-anchor="middle" font-size="9" fill="#a0aec0">spring-ai-openai</text>
+  </g>
+  <g>
+    <rect x="888" y="624" width="184" height="86" fill="#fff" stroke="#d6bcfa" stroke-width="1" rx="6" filter="url(#shadowLight)"/>
+    <text x="980" y="648" text-anchor="middle" font-size="12" font-weight="800" fill="#553c9a">DashScope</text>
+    <text x="980" y="666" text-anchor="middle" font-size="10" fill="#4a5568">Alibaba Cloud Bailian</text>
+    <text x="980" y="680" text-anchor="middle" font-size="10" fill="#4a5568">Qwen / ARMS obs.</text>
+    <text x="980" y="696" text-anchor="middle" font-size="9" fill="#a0aec0">spring-ai-alibaba-core</text>
+  </g>
+  <g>
+    <rect x="1082" y="624" width="184" height="86" fill="#fff" stroke="#d6bcfa" stroke-width="1" rx="6" filter="url(#shadowLight)"/>
+    <text x="1174" y="648" text-anchor="middle" font-size="12" font-weight="800" fill="#553c9a">DeepSeek</text>
+    <text x="1174" y="666" text-anchor="middle" font-size="10" fill="#4a5568">Reasoning model</text>
+    <text x="1174" y="680" text-anchor="middle" font-size="10" fill="#4a5568">API-compatible</text>
+    <text x="1174" y="696" text-anchor="middle" font-size="9" fill="#a0aec0">spring-ai-deepseek</text>
+  </g>
+
+  <!-- API Row 2 -->
+  <g>
+    <rect x="694" y="718" width="184" height="86" fill="#fff" stroke="#d6bcfa" stroke-width="1" rx="6" filter="url(#shadowLight)"/>
+    <text x="786" y="742" text-anchor="middle" font-size="12" font-weight="800" fill="#553c9a">Ollama</text>
+    <text x="786" y="760" text-anchor="middle" font-size="10" fill="#4a5568">Local LLM runtime</text>
+    <text x="786" y="774" text-anchor="middle" font-size="10" fill="#4a5568">Offline / on-prem</text>
+    <text x="786" y="790" text-anchor="middle" font-size="9" fill="#a0aec0">spring-ai-ollama</text>
+  </g>
+  <g>
+    <rect x="888" y="718" width="184" height="86" fill="#fff" stroke="#d6bcfa" stroke-width="1" rx="6" filter="url(#shadowLight)"/>
+    <text x="980" y="742" text-anchor="middle" font-size="12" font-weight="800" fill="#553c9a">Aliyun OSS</text>
+    <text x="980" y="760" text-anchor="middle" font-size="10" fill="#4a5568">Object storage</text>
+    <text x="980" y="774" text-anchor="middle" font-size="10" fill="#4a5568">File / doc upload</text>
+    <text x="980" y="790" text-anchor="middle" font-size="9" fill="#a0aec0">aliyun-sdk-oss v3.17.4</text>
+  </g>
+  <g>
+    <rect x="1082" y="718" width="184" height="86" fill="#fff" stroke="#d6bcfa" stroke-width="1" rx="6" filter="url(#shadowLight)"/>
+    <text x="1174" y="742" text-anchor="middle" font-size="12" font-weight="800" fill="#553c9a">MCP Servers</text>
+    <text x="1174" y="760" text-anchor="middle" font-size="10" fill="#4a5568">External tool servers</text>
+    <text x="1174" y="774" text-anchor="middle" font-size="10" fill="#4a5568">Model Context Protocol</text>
+    <text x="1174" y="790" text-anchor="middle" font-size="9" fill="#a0aec0">mcp-sdk v0.9.0</text>
+  </g>
+
+  <!-- ==================== LEGEND / NOTES ==================== -->
+  <g transform="translate(30,860)">
+    <rect x="0" y="0" width="1260" height="190" rx="8" fill="#fff" stroke="#e2e8f0" filter="url(#shadowLight)"/>
+
+    <!-- Legend swatches -->
+    <rect x="20" y="20" width="18" height="14" fill="url(#javaGrad)" rx="3"/>
+    <text x="46" y="31" font-size="12" fill="#2d3748" font-weight="700">Key Java Libraries</text>
+    <rect x="280" y="20" width="18" height="14" fill="url(#mwGrad)" rx="3"/>
+    <text x="306" y="31" font-size="12" fill="#2d3748" font-weight="700">Middleware (self-hosted)</text>
+    <rect x="520" y="20" width="18" height="14" fill="url(#apiGrad)" rx="3"/>
+    <text x="546" y="31" font-size="12" fill="#2d3748" font-weight="700">External APIs / Cloud</text>
+    <text x="20" y="52" font-size="11" fill="#718096">Arrow: application → dependency · Dashed line = indirect / runtime connection</text>
+
+    <line x1="20" y1="66" x2="1240" y2="66" stroke="#e2e8f0"/>
+
+    <text x="20" y="88" font-size="12" font-weight="700" fill="#2d3748">与参考图 / 实际项目的对齐说明</text>
+    <text x="20" y="110" font-size="11" fill="#4a5568">• 范围收窄：本图聚焦 <tspan font-weight="700">Admin 子项目</tspan>（spring-ai-alibaba-admin v1.0.0-SNAPSHOT），与参考图一致；不再混入主框架的 A2A SDK、starter-dashscope 等扩展。</text>
+    <text x="20" y="130" font-size="11" fill="#4a5568">• 补齐缺项：新增 <tspan font-weight="700">LoongCollector</tspan>（docker-compose 中 OTLP receiver :4318 / v3.1.4）、<tspan font-weight="700">MCP Servers</tspan> 外部服务、<tspan font-weight="700">Spring AI Alibaba core/graph-core</tspan> 发布版依赖、<tspan font-weight="700">Auth/Security</tspan>（JJWT + Argon2）。</text>
+    <text x="20" y="150" font-size="11" fill="#4a5568">• 版本号采用实际 pom / docker-compose：Spring Boot 3.3.6（Admin parent）、Spring AI 1.1.2、RocketMQ server 5.3.2 / client 5.0.7、Elasticsearch server 9.1.2 / Java client 8.13.4、LoongCollector 3.1.4。</text>
+    <text x="20" y="170" font-size="11" fill="#718096">• 说明：docker-compose 还包含 Kibana（ES 可视化）与 rmq-namesrv/broker/proxy（RocketMQ 集群），为运营配套组件，未单独列入依赖卡片。</text>
+  </g>
+</svg>

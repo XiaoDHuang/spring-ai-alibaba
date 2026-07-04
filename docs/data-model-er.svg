@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1420" height="960" viewBox="0 0 1420 960" font-family="'Segoe UI',Arial,sans-serif">
+  <rect width="1420" height="960" fill="#f8fafc" />
+  <!-- Schema area backgrounds -->
+  <rect x="15" y="65" width="870" height="820" rx="8" fill="#ffffff" stroke="#3b82f6" stroke-width="2" stroke-dasharray="6 3" />
+  <rect x="900" y="65" width="500" height="820" rx="8" fill="#ffffff" stroke="#f59e0b" stroke-width="2" stroke-dasharray="6 3" />
+
+  <defs>
+    <style>
+      .box { fill:#ffffff; stroke:#e2e8f0; stroke-width:1.5; }
+      .ttl { fill:#ffffff; font-size:13px; font-weight:700; }
+      .fld { font-size:10.5px; fill:#374151; }
+      .tagPK { fill:#d97706; font-weight:700; }
+      .tagFK { fill:#64748b; font-weight:700; }
+      .tagUK { fill:#7c3aed; font-weight:700; }
+      .lnP { stroke:#2563eb; stroke-width:1.5; fill:none; marker-end:url(#arrow-blue); }
+      .lnR { stroke:#059669; stroke-width:1.5; fill:none; marker-end:url(#arrow-green); }
+      .lnE { stroke:#d97706; stroke-width:1.5; fill:none; marker-end:url(#arrow-orange); }
+      .lnQ { stroke:#7c3aed; stroke-width:1.5; fill:none; marker-end:url(#arrow-purple); }
+      .lnL { stroke:#64748b; stroke-width:1.4; fill:none; stroke-dasharray:5 3; marker-end:url(#arrow-gray); }
+      .lab { font-size:10px; fill:#475569; }
+      .cardN { font-size:10px; font-weight:700; fill:#1e293b; }
+      .card1 { font-size:10px; font-weight:700; fill:#1e293b; }
+    </style>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#2563eb" />
+    </marker>
+    <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#059669" />
+    </marker>
+    <marker id="arrow-orange" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#d97706" />
+    </marker>
+    <marker id="arrow-purple" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#7c3aed" />
+    </marker>
+    <marker id="arrow-gray" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#64748b" />
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="710" y="40" text-anchor="middle" font-size="24" font-weight="700" fill="#1e293b">Spring AI Alibaba Admin — 核心数据模型 ER 图</text>
+  <text x="710" y="60" text-anchor="middle" font-size="13" fill="#64748b">实线 = 外键（强关联）；虚线 = 逻辑关联（无 FK 约束）；1:N 标注基数</text>
+
+  <!-- Legend -->
+  <g transform="translate(25, 885)">
+    <rect x="0" y="0" width="470" height="50" rx="4" fill="#f8fafc" stroke="#e2e8f0" />
+    <rect x="8" y="8" width="12" height="12" fill="#2563eb" /><text x="26" y="18" class="fld">平台核心 (schema: admin)</text>
+    <rect x="158" y="8" width="12" height="12" fill="#059669" /><text x="176" y="18" class="fld">资源</text>
+    <rect x="248" y="8" width="12" height="12" fill="#d97706" /><text x="266" y="18" class="fld">评估实验</text>
+    <rect x="338" y="8" width="12" height="12" fill="#7c3aed" /><text x="356" y="18" class="fld">Prompt</text>
+    <text x="8" y="34" class="fld">🔑 = PK主键  🔗 = FK外键/UK唯一键  实线箭头 = DB外键约束  虚线箭头 = 逻辑关联无DB约束</text>
+  </g>
+
+  <!-- =================== LEFT SCHEMA: admin (platform core) =================== -->
+  <!-- account -->
+  <g>
+    <rect class="box" x="40" y="115" width="200" height="130" />
+    <rect x="40" y="115" width="200" height="26" fill="#3b82f6" rx="2" />
+    <text class="ttl" x="50" y="133">account</text>
+    <text class="fld" x="48" y="158"><tspan class="tagPK">🔑</tspan> id : BIGINT</text>
+    <text class="fld" x="48" y="176"><tspan class="tagUK">🔗</tspan> account_id : VARCHAR(64)</text>
+    <text class="fld" x="48" y="194">username : VARCHAR(255)</text>
+    <text class="fld" x="48" y="212">password_hash / email / avatar</text>
+    <text class="fld" x="48" y="230">type : admin/user  status : 0/1/2</text>
+  </g>
+  <!-- api_key -->
+  <g>
+    <rect class="box" x="270" y="115" width="200" height="110" />
+    <rect x="270" y="115" width="200" height="26" fill="#3b82f6" rx="2" />
+    <text class="ttl" x="280" y="133">api_key</text>
+    <text class="fld" x="278" y="158"><tspan class="tagPK">🔑</tspan> id : BIGINT</text>
+    <text class="fld" x="278" y="176"><tspan class="tagFK">🔗</tspan> account_id → account.id</text>
+    <text class="fld" x="278" y="194">api_key : VARCHAR(512) (UK)</text>
+    <text class="fld" x="278" y="212">description / status</text>
+  </g>
+  <!-- workspace -->
+  <g>
+    <rect class="box" x="40" y="275" width="200" height="110" />
+    <rect x="40" y="275" width="200" height="26" fill="#3b82f6" rx="2" />
+    <text class="ttl" x="50" y="293">workspace</text>
+    <text class="fld" x="48" y="318"><tspan class="tagPK">🔑</tspan> id : BIGINT</text>
+    <text class="fld" x="48" y="336"><tspan class="tagUK">🔗</tspan> workspace_id : VARCHAR(64)</text>
+    <text class="fld" x="48" y="354"><tspan class="tagFK">🔗</tspan> account_id → account.id</text>
+    <text class="fld" x="48" y="372">name / description / status</text>
+  </g>
+  <!-- application -->
+  <g>
+    <rect class="box" x="270" y="275" width="200" height="130" />
+    <rect x="270" y="275" width="200" height="26" fill="#3b82f6" rx="2" />
+    <text class="ttl" x="280" y="293">application</text>
+    <text class="fld" x="278" y="318"><tspan class="tagPK">🔑</tspan> id : BIGINT</text>
+    <text class="fld" x="278" y="336"><tspan class="tagUK">🔗</tspan> app_id : VARCHAR(64)</text>
+    <text class="fld" x="278" y="354"><tspan class="tagFK">🔗</tspan> workspace_id → workspace.id</text>
+    <text class="fld" x="278" y="372">name / description / icon</text>
+    <text class="fld" x="278" y="390">type : basic/workflow</text>
+    <text class="fld" x="278" y="408">status : 0 deleted / 1 draft / 2 published / 3 published_editing</text>
+  </g>
+  <!-- application_version -->
+  <g>
+    <rect class="box" x="270" y="425" width="200" height="120" />
+    <rect x="270" y="425" width="200" height="26" fill="#3b82f6" rx="2" />
+    <text class="ttl" x="280" y="443">application_version</text>
+    <text class="fld" x="278" y="468"><tspan class="tagPK">🔑</tspan> id : BIGINT</text>
+    <text class="fld" x="278" y="486"><tspan class="tagFK">🔗</tspan> app_id → application.app_id</text>
+    <text class="fld" x="278" y="504">version : VARCHAR(32)</text>
+    <text class="fld" x="278" y="522">config_snapshot : LONGTEXT (JSON)</text>
+    <text class="fld" x="278" y="540">publish_status / description</text>
+  </g>
+  <!-- app_component -->
+  <g>
+    <rect class="box" x="40" y="425" width="200" height="120" />
+    <rect x="40" y="425" width="200" height="26" fill="#6366f1" rx="2" />
+    <text class="ttl" x="50" y="443">app_component</text>
+    <text class="fld" x="48" y="468"><tspan class="tagPK">🔑</tspan> id : BIGINT</text>
+    <text class="fld" x="48" y="486">code : VARCHAR(64)</text>
+    <text class="fld" x="48" y="504"><tspan class="tagFK">🔗</tspan> app_id → application.app_id (logical)</text>
+    <text class="fld" x="48" y="522">type : agent/workflow</text>
+    <text class="fld" x="48" y="540">config : JSON / status / order_num</text>
+  </g>
+  <!-- knowledge_base -->
+  <g>
+    <rect class="box" x="500" y="115" width="200" height="130" />
+    <rect x="500" y="115" width="200" height="26" fill="#22c55e" rx="2" />
+    <text class="ttl" x="510" y="133">knowledge_base</text>
+    <text class="fld" x="508" y="158"><tspan class="tagPK">🔑</tspan> id : BIGINT</text>
+    <text class="fld" x="508" y="176"><tspan class="tagUK">🔗</tspan> kb_id : VARCHAR(64)</text>
+    <text class="fld" x="508" y="194"><tspan class="tagFK">🔗</tspan> workspace_id → workspace.id</text>
+    <text class="fld" x="508" y="212">name / description / type</text>
+    <text class="fld" x="508" y="230">process/index/search config</text>
+  </g>
+  <!-- document -->
+  <g>
+    <rect class="box" x="500" y="275" width="200" height="150" />
+    <rect x="500" y="275" width="200" height="26" fill="#22c55e" rx="2" />
+    <text class="ttl" x="510" y="293">document</text>
+    <text class="fld" x="508" y="318"><tspan class="tagPK">🔑</tspan> id : BIGINT</text>
+    <text class="fld" x="508" y="336"><tspan class="tagUK">🔗</tspan> doc_id : VARCHAR(64)</text>
+    <text class="fld" x="508" y="354"><tspan class="tagFK">🔗</tspan> kb_id → knowledge_base.kb_id</text>
+    <text class="fld" x="508" y="372">name / type : file/url/oss</text>
+    <text class="fld" x="508" y="390">index_status : 1/2/3/4</text>
+    <text class="fld" x="508" y="408">path / size / chunks → Elasticsearch</text>
+  </g>
+  <!-- plugin -->
+  <g>
+    <rect class="box" x="500" y="455" width="200" height="120" />
+    <rect x="500" y="455" width="200" height="26" fill="#f59e0b" rx="2" />
+    <text class="ttl" x="510" y="473">plugin</text>
+    <text class="fld" x="508" y="498"><tspan class="tagPK">🔑</tspan> id : BIGINT</text>
+    <text class="fld" x="508" y="516"><tspan class="tagUK">🔗</tspan> plugin_id : VARCHAR(64)</text>
+    <text class="fld" x="508" y="534"><tspan class="tagFK">🔗</tspan> workspace_id → workspace.id</text>
+    <text class="fld" x="508" y="552">name / type : official/custom</text>
+    <text class="fld" x="508" y="570">config / status / icon</text>
+  </g>
+  <!-- tool -->
+  <g>
+    <rect class="box" x="500" y="605" width="200" height="130" />
+    <rect x="500" y="605" width="200" height="26" fill="#f59e0b" rx="2" />
+    <text class="ttl" x="510" y="623">tool</text>
+    <text class="fld" x="508" y="648"><tspan class="tagPK">🔑</tspan> id : BIGINT</text>
+    <text class="fld" x="508" y="666"><tspan class="tagFK">🔗</tspan> plugin_id → plugin.plugin_id (logical)</text>
+    <text class="fld" x="508" y="684">name / description / type</text>
+    <text class="fld" x="508" y="702">config / input_schema : JSON</text>
+    <text class="fld" x="508" y="720">test_status : 1 not_test / 2 passed / 3 failed</text>
+  </g>
+  <!-- reference -->
+  <g>
+    <rect class="box" x="40" y="575" width="200" height="110" />
+    <rect x="40" y="575" width="200" height="26" fill="#ec4899" rx="2" />
+    <text class="ttl" x="50" y="593">reference (N:M bridge)</text>
+    <text class="fld" x="48" y="618"><tspan class="tagPK">🔑</tspan> id : BIGINT</text>
+    <text class="fld" x="48" y="636">source_id / source_type</text>
+    <text class="fld" x="48" y="654">target_id / target_type</text>
+    <text class="fld" x="48" y="672">relation_type / workspace_id</text>
+  </g>
+  <!-- provider -->
+  <g>
+    <rect class="box" x="40" y="715" width="200" height="130" />
+    <rect x="40" y="715" width="200" height="26" fill="#8b5cf6" rx="2" />
+    <text class="ttl" x="50" y="733">provider</text>
+    <text class="fld" x="48" y="758"><tspan class="tagPK">🔑</tspan> id : BIGINT</text>
+    <text class="fld" x="48" y="776">provider : VARCHAR(255) (provider key)</text>
+    <text class="fld" x="48" y="794">name / description / icon</text>
+    <text class="fld" x="48" y="812">enable / source : preset/custom</text>
+    <text class="fld" x="48" y="830">credential / supported_model_types</text>
+  </g>
+  <!-- model -->
+  <g>
+    <rect class="box" x="270" y="715" width="200" height="130" />
+    <rect x="270" y="715" width="200" height="26" fill="#8b5cf6" rx="2" />
+    <text class="ttl" x="280" y="733">model</text>
+    <text class="fld" x="278" y="758"><tspan class="tagPK">🔑</tspan> id : BIGINT</text>
+    <text class="fld" x="278" y="776">model_id : VARCHAR(100)</text>
+    <text class="fld" x="278" y="794"><tspan class="tagFK">🔗</tspan> provider → provider.provider (logical)</text>
+    <text class="fld" x="278" y="812">name / type : llm/text_embedding/rerank</text>
+    <text class="fld" x="278" y="830">tags / enable / source</text>
+  </g>
+  <!-- mcp_server -->
+  <g>
+    <rect class="box" x="500" y="755" width="200" height="110" />
+    <rect x="500" y="755" width="200" height="26" fill="#14b8a6" rx="2" />
+    <text class="ttl" x="510" y="773">mcp_server</text>
+    <text class="fld" x="508" y="798"><tspan class="tagPK">🔑</tspan> id : BIGINT</text>
+    <text class="fld" x="508" y="816">server_code : VARCHAR(64)</text>
+    <text class="fld" x="508" y="834">name / type : OFFICIAL/CUSTOMER</text>
+    <text class="fld" x="508" y="852">status : 0/1/3  config : JSON</text>
+  </g>
+
+  <!-- ====== LEFT SCHEMA RELATIONSHIPS ====== -->
+  <!-- account 1:N workspace -->
+  <path class="lnP" d="M140 245 L140 275" />
+  <text class="card1" x="145" y="265">1</text>
+  <text class="cardN" x="130" y="265">N</text>
+  <!-- account 1:N api_key -->
+  <path class="lnP" d="M240 170 L270 170" />
+  <text class="card1" x="250" y="165">1</text>
+  <text class="cardN" x="265" y="165">N</text>
+  <!-- workspace 1:N application -->
+  <path class="lnP" d="M240 330 L270 330" />
+  <text class="card1" x="250" y="325">1</text>
+  <text class="cardN" x="265" y="325">N</text>
+  <!-- workspace 1:N knowledge_base -->
+  <path class="lnR" d="M240 330 L370 330 L370 180 L500 180" />
+  <text class="card1" x="250" y="325">1</text>
+  <text class="cardN" x="495" y="175">N</text>
+  <!-- workspace 1:N plugin (logical) -->
+  <path class="lnL" d="M240 360 L420 360 L420 515 L500 515" />
+  <text class="card1" x="250" y="355">1</text>
+  <text class="cardN" x="495" y="510">N</text>
+  <!-- application 1:N application_version -->
+  <path class="lnP" d="M370 405 L370 425" />
+  <text class="card1" x="375" y="420">1</text>
+  <text class="cardN" x="375" y="435">N</text>
+  <!-- application 1:N app_component (logical) -->
+  <path class="lnL" d="M270 340 L200 340 L200 425 L240 425" />
+  <text class="card1" x="250" y="335">1</text>
+  <text class="cardN" x="235" y="420">N</text>
+  <!-- knowledge_base 1:N document -->
+  <path class="lnR" d="M600 245 L600 275" />
+  <text class="card1" x="605" y="265">1</text>
+  <text class="cardN" x="605" y="280">N</text>
+  <!-- plugin 1:N tool (logical) -->
+  <path class="lnL" d="M600 575 L600 605" />
+  <text class="card1" x="605" y="595">1</text>
+  <text class="cardN" x="605" y="610">N</text>
+  <!-- provider 1:N model (logical) -->
+  <path class="lnL" d="M240 780 L270 780" />
+  <text class="card1" x="250" y="775">1</text>
+  <text class="cardN" x="265" y="775">N</text>
+
+  <!-- =================== RIGHT SCHEMA: agentscope =================== -->
+  <!-- prompt -->
+  <g>
+    <rect class="box" x="925" y="115" width="450" height="110" />
+    <rect x="925" y="115" width="450" height="26" fill="#f59e0b" rx="2" />
+    <text class="ttl" x="935" y="133">prompt</text>
+    <text class="fld" x="933" y="158"><tspan class="tagPK">🔑</tspan> id : BIGINT</text>
+    <text class="fld" x="933" y="176"><tspan class="tagUK">🔗</tspan> prompt_key : VARCHAR(255) (UK)</text>
+    <text class="fld" x="933" y="194">name / description / tags / latest_version</text>
+    <text class="fld" x="933" y="212">type / status</text>
+  </g>
+  <!-- prompt_version -->
+  <g>
+    <rect class="box" x="925" y="255" width="450" height="120" />
+    <rect x="925" y="255" width="450" height="26" fill="#f59e0b" rx="2" />
+    <text class="ttl" x="935" y="273">prompt_version</text>
+    <text class="fld" x="933" y="298"><tspan class="tagPK">🔑</tspan> id : BIGINT</text>
+    <text class="fld" x="933" y="316"><tspan class="tagFK">🔗</tspan> prompt_key → prompt.prompt_key (logical)</text>
+    <text class="fld" x="933" y="334">version : VARCHAR(32)</text>
+    <text class="fld" x="933" y="352">content / variables / model_config (id via JSON)</text>
+    <text class="fld" x="933" y="370">status : pre/release</text>
+  </g>
+  <!-- dataset -->
+  <g>
+    <rect class="box" x="925" y="405" width="200" height="120" />
+    <rect x="925" y="405" width="200" height="26" fill="#f59e0b" rx="2" />
+    <text class="ttl" x="935" y="423">dataset</text>
+    <text class="fld" x="933" y="448"><tspan class="tagPK">🔑</tspan> id : BIGINT</text>
+    <text class="fld" x="933" y="466">name / description</text>
+    <text class="fld" x="933" y="484">columns_config (JSON)</text>
+    <text class="fld" x="933" y="502">deleted : 0/1</text>
+  </g>
+  <!-- dataset_version -->
+  <g>
+    <rect class="box" x="1175" y="405" width="200" height="120" />
+    <rect x="1175" y="405" width="200" height="26" fill="#f59e0b" rx="2" />
+    <text class="ttl" x="1185" y="423">dataset_version</text>
+    <text class="fld" x="1183" y="448"><tspan class="tagPK">🔑</tspan> id : BIGINT</text>
+    <text class="fld" x="1183" y="466"><tspan class="tagFK">🔗</tspan> dataset_id → dataset.id</text>
+    <text class="fld" x="1183" y="484">version / item_count</text>
+    <text class="fld" x="1183" y="502">status / snapshot_path</text>
+  </g>
+  <!-- dataset_item -->
+  <g>
+    <rect class="box" x="1175" y="555" width="200" height="120" />
+    <rect x="1175" y="555" width="200" height="26" fill="#f59e0b" rx="2" />
+    <text class="ttl" x="1185" y="573">dataset_item</text>
+    <text class="fld" x="1183" y="598"><tspan class="tagPK">🔑</tspan> id : BIGINT</text>
+    <text class="fld" x="1183" y="616"><tspan class="tagFK">🔗</tspan> dataset_id → dataset.id</text>
+    <text class="fld" x="1183" y="634">input / expected_output</text>
+    <text class="fld" x="1183" y="652">metadata (JSON)</text>
+    <text class="fld" x="1183" y="670">deleted : 0/1</text>
+  </g>
+  <!-- evaluator -->
+  <g>
+    <rect class="box" x="925" y="555" width="200" height="100" />
+    <rect x="925" y="555" width="200" height="26" fill="#f59e0b" rx="2" />
+    <text class="ttl" x="935" y="573">evaluator</text>
+    <text class="fld" x="933" y="598"><tspan class="tagPK">🔑</tspan> id : BIGINT</text>
+    <text class="fld" x="933" y="616">name / description</text>
+    <text class="fld" x="933" y="634">deleted : 0/1</text>
+  </g>
+  <!-- evaluator_version -->
+  <g>
+    <rect class="box" x="925" y="685" width="200" height="120" />
+    <rect x="925" y="685" width="200" height="26" fill="#f59e0b" rx="2" />
+    <text class="ttl" x="935" y="703">evaluator_version</text>
+    <text class="fld" x="933" y="728"><tspan class="tagPK">🔑</tspan> id : BIGINT</text>
+    <text class="fld" x="933" y="746"><tspan class="tagFK">🔗</tspan> evaluator_id → evaluator.id</text>
+    <text class="fld" x="933" y="764">model_config (JSON with id)</text>
+    <text class="fld" x="933" y="782">version / prompt / status</text>
+  </g>
+  <!-- experiment -->
+  <g>
+    <rect class="box" x="1175" y="705" width="200" height="120" />
+    <rect x="1175" y="705" width="200" height="26" fill="#ec4899" rx="2" />
+    <text class="ttl" x="1185" y="723">experiment</text>
+    <text class="fld" x="1183" y="748"><tspan class="tagPK">🔑</tspan> id : BIGINT</text>
+    <text class="fld" x="1183" y="766"><tspan class="tagFK">🔗</tspan> dataset_id → dataset.id (logical)</text>
+    <text class="fld" x="1183" y="784"><tspan class="tagFK">🔗</tspan> evaluator_version_id → evaluator_version.id (logical)</text>
+    <text class="fld" x="1183" y="802">status / progress / run_at</text>
+  </g>
+  <!-- experiment_result -->
+  <g>
+    <rect class="box" x="925" y="835" width="450" height="80" />
+    <rect x="925" y="835" width="450" height="26" fill="#ec4899" rx="2" />
+    <text class="ttl" x="935" y="853">experiment_result</text>
+    <text class="fld" x="933" y="878"><tspan class="tagPK">🔑</tspan> id : BIGINT</text>
+    <text class="fld" x="933" y="896"><tspan class="tagFK">🔗</tspan> experiment_id → experiment.id (logical) / evaluator_version_id → evaluator_version.id (logical)</text>
+    <text class="fld" x="933" y="914">score / reason / evaluation_time</text>
+  </g>
+
+  <!-- ====== RIGHT SCHEMA RELATIONSHIPS ====== -->
+  <!-- prompt 1:N prompt_version (logical) -->
+  <path class="lnL" d="M1150 225 L1150 255" />
+  <text class="card1" x="1155" y="245">1</text>
+  <text class="cardN" x="1155" y="260">N</text>
+  <!-- dataset 1:N dataset_version -->
+  <path class="lnE" d="M1125 465 L1175 465" />
+  <text class="card1" x="1135" y="460">1</text>
+  <text class="cardN" x="1170" y="460">N</text>
+  <!-- dataset_version 1:N dataset_item (by dataset; logical) -->
+  <path class="lnL" d="M1275 525 L1275 555" />
+  <text class="card1" x="1280" y="545">1</text>
+  <text class="cardN" x="1280" y="560">N</text>
+  <!-- dataset 1:N experiment (logical) -->
+  <path class="lnL" d="M1125 465 L1180 620 L1175 705" />
+  <text class="card1" x="1135" y="460">1</text>
+  <text class="cardN" x="1170" y="700">N</text>
+  <!-- dataset_version 1:N experiment (logical) -->
+  <path class="lnL" d="M1275 525 L1275 705" />
+  <text class="card1" x="1280" y="545">1</text>
+  <text class="cardN" x="1280" y="700">N</text>
+  <!-- evaluator 1:N evaluator_version -->
+  <path class="lnE" d="M1025 655 L1025 685" />
+  <text class="card1" x="1030" y="675">1</text>
+  <text class="cardN" x="1030" y="690">N</text>
+  <!-- evaluator_version N:1 experiment (logical) -->
+  <path class="lnL" d="M1125 745 L1175 745" />
+  <text class="cardN" x="1170" y="740">N</text>
+  <text class="card1" x="1130" y="740">1</text>
+  <!-- experiment 1:N experiment_result -->
+  <path class="lnE" d="M1150 825 L1150 835" />
+  <text class="card1" x="1155" y="830">1</text>
+  <text class="cardN" x="1155" y="845">N</text>
+
+  <!-- Footer note -->
+  <text x="700" y="950" text-anchor="middle" font-size="11" fill="#64748b">
+  <tspan x="700" dy="0">🔑 = PK主键  🔗 = FK外键/UK唯一键  实线箭头 = DB外键约束  虚线箭头 = 逻辑关联（无DB约束）</tspan>
+  </text>
+</svg>
