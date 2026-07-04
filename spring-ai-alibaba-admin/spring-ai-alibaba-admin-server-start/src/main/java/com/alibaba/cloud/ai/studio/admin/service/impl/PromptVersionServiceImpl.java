@@ -1,8 +1,11 @@
 package com.alibaba.cloud.ai.studio.admin.service.impl;
 
 import com.alibaba.cloud.ai.studio.admin.common.PageResult;
+import com.alibaba.cloud.ai.studio.admin.dto.DiffItem;
 import com.alibaba.cloud.ai.studio.admin.dto.PromptVersion;
 import com.alibaba.cloud.ai.studio.admin.dto.PromptVersionDetail;
+import com.alibaba.cloud.ai.studio.admin.dto.PromptVersionDiffResult;
+import com.alibaba.cloud.ai.studio.admin.dto.VersionMeta;
 import com.alibaba.cloud.ai.studio.admin.dto.request.PromptVersionCreateRequest;
 import com.alibaba.cloud.ai.studio.admin.dto.request.PromptVersionListRequest;
 import com.alibaba.cloud.ai.studio.admin.entity.PromptVersionDO;
@@ -25,6 +28,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -152,7 +156,78 @@ public class PromptVersionServiceImpl implements PromptVersionService {
         
         return PromptVersionDetail.fromDO(promptVersionDO);
     }
-    
+
+    @Override
+    public PromptVersionDiffResult diffVersions(String promptKey, String versionA, String versionB)
+            throws StudioException {
+        // ── 参数校验 ──
+        if (promptKey == null || promptKey.isBlank()) {
+            throw new StudioException(StudioException.INVALID_PARAM, "参数错误：promptKey 不能为空");
+        }
+        if (versionA == null || versionA.isBlank()) {
+            throw new StudioException(StudioException.INVALID_PARAM, "参数错误：versionA 不能为空");
+        }
+        if (versionB == null || versionB.isBlank()) {
+            throw new StudioException(StudioException.INVALID_PARAM, "参数错误：versionB 不能为空");
+        }
+        if (versionA.equals(versionB)) {
+            throw new StudioException(StudioException.INVALID_PARAM, "versionA 和 versionB 不能相同");
+        }
+
+        // ── 查两版本（复用 getByPromptKeyAndVersion，已确认无 metrics 副作用）──
+        PromptVersionDetail detailA = getByPromptKeyAndVersion(promptKey, versionA);
+        PromptVersionDetail detailB = getByPromptKeyAndVersion(promptKey, versionB);
+
+        // ── null → ""（D1 决策）──
+        String templateA = nullToEmpty(detailA.getTemplate());
+        String templateB = nullToEmpty(detailB.getTemplate());
+        String varsA = nullToEmpty(detailA.getVariables());
+        String varsB = nullToEmpty(detailB.getVariables());
+        String configA = nullToEmpty(detailA.getModelConfig());
+        String configB = nullToEmpty(detailB.getModelConfig());
+
+        // ── DiffItem × 3 ──
+        DiffItem templateDiff = DiffItem.builder()
+            .changed(!Objects.equals(templateA, templateB))
+            .valueA(templateA).valueB(templateB).build();
+        DiffItem variablesDiff = DiffItem.builder()
+            .changed(!Objects.equals(varsA, varsB))
+            .valueA(varsA).valueB(varsB).build();
+        DiffItem modelConfigDiff = DiffItem.builder()
+            .changed(!Objects.equals(configA, configB))
+            .valueA(configA).valueB(configB).build();
+
+        // ── DiffFields ──
+        PromptVersionDiffResult.DiffFields diffs = PromptVersionDiffResult.DiffFields.builder()
+            .template(templateDiff)
+            .variables(variablesDiff)
+            .modelConfig(modelConfigDiff)
+            .build();
+
+        // ── VersionMeta × 2 ──
+        VersionMeta metaA = VersionMeta.builder()
+            .version(detailA.getVersion())
+            .status(detailA.getStatus())
+            .createTime(detailA.getCreateTime())
+            .build();
+        VersionMeta metaB = VersionMeta.builder()
+            .version(detailB.getVersion())
+            .status(detailB.getStatus())
+            .createTime(detailB.getCreateTime())
+            .build();
+
+        return PromptVersionDiffResult.builder()
+            .promptKey(promptKey)
+            .versionA(metaA)
+            .versionB(metaB)
+            .diffs(diffs)
+            .build();
+    }
+
+    private static String nullToEmpty(String s) {
+        return s == null ? "" : s;
+    }
+
     @Override
     public PageResult<PromptVersion> list(PromptVersionListRequest request) {
         log.info("查询Prompt版本列表: {}", request);

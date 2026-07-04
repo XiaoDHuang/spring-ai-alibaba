@@ -3,6 +3,7 @@ package com.alibaba.cloud.ai.studio.admin.service;
 import com.alibaba.cloud.ai.studio.admin.common.PageResult;
 import com.alibaba.cloud.ai.studio.admin.dto.PromptVersion;
 import com.alibaba.cloud.ai.studio.admin.dto.PromptVersionDetail;
+import com.alibaba.cloud.ai.studio.admin.dto.PromptVersionDiffResult;
 import com.alibaba.cloud.ai.studio.admin.dto.request.PromptVersionCreateRequest;
 import com.alibaba.cloud.ai.studio.admin.dto.request.PromptVersionListRequest;
 import com.alibaba.cloud.ai.studio.admin.exception.StudioException;
@@ -33,4 +34,15 @@ public interface PromptVersionService {
      * @return 分页结果
      */
     PageResult<PromptVersion> list(PromptVersionListRequest request);
+
+    /**
+     * 对比两个 Prompt 版本的内容与元信息。
+     *
+     * @param promptKey Prompt Key
+     * @param versionA  版本号 A
+     * @param versionB  版本号 B
+     * @return 两个版本的 diff 结果
+     * @throws StudioException 参数非法或版本不存在
+     */
+    PromptVersionDiffResult diffVersions(String promptKey, String versionA, String versionB) throws StudioException;
 }

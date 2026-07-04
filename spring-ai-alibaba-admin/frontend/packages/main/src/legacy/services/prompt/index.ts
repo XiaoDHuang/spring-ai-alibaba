@@ -111,6 +111,15 @@ export async function getPromptTemplates(params: PromptAPI.GetPromptTemplatesPar
   });
 }
 
+// prompt 版本对比
+// GET /api/prompt/version/diff
+export async function getPromptVersionDiff(params: PromptAPI.DiffParams) {
+  return request<PromptAPI.DiffResult>(`${API_PATH}/prompt/version/diff`, {
+    method: 'GET',
+    params,
+  });
+}
+
 // prompt 模板详情
 export async function getPromptTemplate(params: { promptTemplateKey: string }) {
   return request<PromptAPI.GetPromptTemplateResult>(`${API_PATH}/prompt/template`, {

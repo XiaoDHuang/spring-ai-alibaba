@@ -125,6 +125,7 @@ Spring AI Alibaba Admin 是多模块工程，含 4 个 Maven 子模块，全量�
 | POST | `/api/prompt/version` | 创建 Prompt 版本 |
 | GET | `/api/prompt/version` | 获取指定版本详情 |
 | GET | `/api/prompt/versions` | 版本分页列表 |
+| GET | `/api/prompt/version/diff` | 对比两个版本的内容与元信息（✅ 已上线） |
 | GET | `/api/prompt/template` | 获取 Prompt 模板详情 |
 | GET | `/api/prompt/templates` | 模板分页列表 |
 | POST | `/api/prompt/run` | 执行 Prompt（流式） |
@@ -150,6 +151,10 @@ Spring AI Alibaba Admin 是多模块工程，含 4 个 Maven 子模块，全量�
 **GET `/api/prompt/version`**
 - 入参：`?promptKey=xxx&version=xxx` (均必填)
 - 返回：`Result<PromptVersionDetail>`
+
+**GET `/api/prompt/version/diff`** ✅
+- 入参：`?promptKey=xxx&versionA=v3&versionB=v5`（均必填，`@NotBlank`）
+- 返回：`Result<PromptVersionDiffResult>` — `{ promptKey, versionA: { version, status, createTime(epoch ms) }, versionB: { version, status, createTime(epoch ms) }, diffs: { template: { changed, valueA, valueB }, variables: { changed, valueA, valueB }, modelConfig: { changed, valueA, valueB } } }`。null 字段值返回 `""`，`changed` 基于 `Objects.equals(nullToEmpty(a), nullToEmpty(b))` 判定
 
 **POST `/api/prompt/run`**
 - 入参：`PromptRunRequest { sessionId, promptKey, version, template, variables, modelConfig, message, newSession, mockTools }`

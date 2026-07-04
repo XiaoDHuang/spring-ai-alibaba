@@ -91,6 +91,9 @@ spring-ai-alibaba/
 3.  **Dependencies**: Check `spring-ai-alibaba-bom` or the parent POM for version management.
 4.  **Makefile**: Use the root Makefile for linting and license checks.
 5.  **Adding Features**: When adding new features, prefer putting them in `spring-ai-alibaba-agent-framework` (for generic agent features) or `spring-boot-starters` (for Spring Boot starters) depending on scope.
+6.  **Admin Module Build**: The `spring-ai-alibaba-admin` module uses its own parent POM with `${revision}` placeholder. Always pass `-Drevision=1.0.0-SNAPSHOT` when running Maven in this module. After `mvn install`, verify that installed POMs in `~/.m2` have `${revision}` resolved; if not, run `sed -i 's/${revision}/1.0.0-SNAPSHOT/g'` on them before running tests. The root project's `flatten-maven-plugin` does NOT propagate to the admin sub-reactor.
+7.  **Auth Interceptor Coverage**: Endpoints under `/api/**` (non-v1) are NOT automatically protected by any interceptor — only `/api/v1/**` (ApiKey) and `/console/v1/**` (Token) are covered. Every new `/api/**` endpoint must be explicitly registered in `InterceptorConfig.java` adding `.addPathPatterns("/api/<module>/**")` to `TokenAuthInterceptor`.
+8.  **Dual ORM**: Admin database uses **JPA** (`@Table`, `@Id`, `@GeneratedValue` — see `PromptVersionDO`). Agentscope database uses **MyBatis-Plus** (`@TableName`, `@TableId`, `BaseMapper`). When adding queries, match the ORM to the target database: if the table is in `admin` schema, use JPA Repository or JPQL; if in `agentscope` schema, use MyBatis-Plus `BaseMapper` + XML mapper. Do NOT mix them — JPA entities do NOT have `@TableName` and MyBatis-Plus entities do NOT have `@Table`.
 
 ## Prohibited Areas (do NOT edit these unless explicitly asked)
 

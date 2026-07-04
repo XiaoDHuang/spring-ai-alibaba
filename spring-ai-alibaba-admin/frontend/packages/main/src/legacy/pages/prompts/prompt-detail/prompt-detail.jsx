@@ -15,10 +15,12 @@ import {
   MessageOutlined, UserOutlined, PlusOutlined,
   EyeOutlined,
   ShareAltOutlined,
+  SwapOutlined,
 } from '@ant-design/icons';
 import { handleApiError } from '../../../utils/notification';
 import { executeStreamingPrompt } from '../../../utils/streamingPrompt';
 import PublishVersionModal from '../../../components/PublishVersionModal';
+import PromptVersionDiffModal from '../../../components/PromptVersionDiffModal';
 import TemplateImportModal from '../../../components/TemplateImportModal';
 import API from '../../../services';
 import { ModelsContext } from '../../../context/models';
@@ -57,6 +59,7 @@ const PromptDetailPage = () => {
   const { models, modelNameMap } = useContext(ModelsContext);
 
   const [showPublishModal, setShowPublishModal] = useState(false);
+  const [showDiffModal, setShowDiffModal] = useState(false);
   const [showTemplateModal, setShowTemplateModal] = useState(null);
   const [showRestoreSuccess, setShowRestoreSuccess] = useState(false);
   const [restoredVersion, setRestoredVersion] = useState(null);
@@ -1240,6 +1243,13 @@ const PromptDetailPage = () => {
                         >
                           {promptInstances.length >= 3 ? '发布' : '发布新版本'}
                         </Button>
+                        <Button
+                          icon={<SwapOutlined />}
+                          size={promptInstances.length >= 3 ? "small" : "default"}
+                          onClick={() => setShowDiffModal(true)}
+                        >
+                          版本对比
+                        </Button>
                       </div>
                       {/* 基础操作按钮 - 只显示最重要的 */}
                       <Space size="small">
@@ -1746,6 +1756,13 @@ const PromptDetailPage = () => {
           }}
         />
       )}
+
+      {/* 版本对比弹窗 */}
+      <PromptVersionDiffModal
+        promptKey={currentPrompt?.promptKey}
+        visible={showDiffModal}
+        onClose={() => setShowDiffModal(false)}
+      />
 
       {showTemplateModal !== null && (
         <TemplateImportModal

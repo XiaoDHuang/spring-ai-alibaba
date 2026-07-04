@@ -9,6 +9,7 @@ import com.alibaba.cloud.ai.studio.admin.dto.PromptTemplate;
 import com.alibaba.cloud.ai.studio.admin.dto.PromptTemplateDetail;
 import com.alibaba.cloud.ai.studio.admin.dto.PromptVersion;
 import com.alibaba.cloud.ai.studio.admin.dto.PromptVersionDetail;
+import com.alibaba.cloud.ai.studio.admin.dto.PromptVersionDiffResult;
 import com.alibaba.cloud.ai.studio.admin.dto.request.*;
 import com.alibaba.cloud.ai.studio.admin.exception.StudioException;
 import com.alibaba.cloud.ai.studio.admin.service.PromptRunService;
@@ -118,6 +119,19 @@ public class PromptController {
     public Result<PageResult<PromptVersion>> listPromptVersions(@Validated @ModelAttribute PromptVersionListRequest request) {
         log.info("查询Prompt版本列表请求: {}", request);
         PageResult<PromptVersion> result = promptVersionService.list(request);
+        return Result.success(result);
+    }
+
+    /**
+     * 对比两个Prompt版本的内容与元信息。
+     */
+    @GetMapping("/prompt/version/diff")
+    public Result<PromptVersionDiffResult> diffPromptVersions(
+            @RequestParam @NotBlank String promptKey,
+            @RequestParam @NotBlank String versionA,
+            @RequestParam @NotBlank String versionB) throws StudioException {
+        log.info("对比Prompt版本请求: promptKey={}, versionA={}, versionB={}", promptKey, versionA, versionB);
+        PromptVersionDiffResult result = promptVersionService.diffVersions(promptKey, versionA, versionB);
         return Result.success(result);
     }
 
